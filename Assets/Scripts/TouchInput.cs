@@ -10,8 +10,6 @@ public class TouchInput : MonoBehaviour
     private List<float> tapPosXInfos = new List<float>(); //存储点击手势信息
     private List<float> touchPosXInfos = new List<float>(); //存储触摸手势信息
 
-    private List<float> lastTouchPosXInfos = new List<float>(); //存储触摸手势信息
-
     private List<GameObject> touchLinesList = new List<GameObject>(); //触摸指示线
 
     [Header("触摸指示线开关")]
@@ -41,8 +39,10 @@ public class TouchInput : MonoBehaviour
         //触摸操作
         GetTouchInputs();
 
+#if UNITY_EDITOR
         //鼠标操作
         GetMouseInputs();
+#endif
 
         //生成触摸指示线
         GenerateTouchLine();
@@ -53,11 +53,6 @@ public class TouchInput : MonoBehaviour
     /// </summary>
     private void ClearInputPosInfo()
     {
-        lastTouchPosXInfos.Clear();
-        foreach (float a in touchPosXInfos)
-        {
-            lastTouchPosXInfos.Add(a);
-        }
         tapPosXInfos.Clear();
         touchPosXInfos.Clear();
     }
@@ -84,6 +79,8 @@ public class TouchInput : MonoBehaviour
         tapText.text = $"Tap Count: {tapPosXInfos.Count}";
     }
 
+#if UNITY_EDITOR
+
     /// <summary>
     /// 获取鼠标操作
     /// </summary>
@@ -103,6 +100,8 @@ public class TouchInput : MonoBehaviour
             }
         }
     }
+
+#endif
 
     /// <summary>
     /// 生成指示线
@@ -125,7 +124,7 @@ public class TouchInput : MonoBehaviour
             }
             lineText.text = $"Line Count: {touchLinesList.Count}";
             //销毁多余指示线
-            for (int i = touchPosXInfos.Count - 1; i < touchLinesList.Count; i++)
+            for (int i = touchPosXInfos.Count; i < touchLinesList.Count;)
             {
                 Destroy(touchLinesList[i]);
                 touchLinesList.RemoveAt(i);
