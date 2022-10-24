@@ -41,13 +41,45 @@ public class ChartTool : Editor
     [MenuItem("Tools/ConvertChart")]
     public static void ConvertChart()
     {
-        List<ChartOrigin> chartOrigins = new List<ChartOrigin>();
-        string[] filePaths = Directory.GetFiles($"{Application.dataPath}/Charts", "*.json", SearchOption.AllDirectories);
-        foreach (string filePath in filePaths)
+        string[] filePaths = Directory.GetFiles($"{Application.dataPath}/Charts/origin", "*.json", SearchOption.AllDirectories);
+        for (int j = 0; j < filePaths.Length; j++)
         {
-            var json = File.ReadAllText(filePath);
+            var json = File.ReadAllText(filePaths[j]);
             var data = JsonUtility.FromJson<ChartOrigin>(json);
-            chartOrigins.Add(data);
+
+            for (int i = 0; i < data.links.Count; i++) //循环读取links
+            {
+                foreach (var linknote in data.links[i].notes)//读取其中一个link，循环读取其中的notes
+                {
+                    foreach (var note in data.notes)
+                    {
+                        if (note.id == linknote.id)
+                        {
+                            note.type = 1;
+                        }
+                    }
+                }
+            }
+            Chart newChart = new Chart();
+            var filename = filePaths[j].Substring(filePaths[j].LastIndexOf('\\') + 1).Split('.');
+            newChart.name = filename[0];
+            newChart.difficulty = filename[1];
+            newChart.level = short.Parse(filename[2]);
+            newChart.speed = data.speed;
+            newChart.notes = new List<Note>(data.notes.ConvertAll(e =>
+            {
+                return new Note
+                {
+                    id = e.id,
+                    type = e.type,
+                    pos = e.pos,
+                    size = e.size,
+                    time = e.time,
+                };
+            }));
+            //转换完成，准备保存
+            var newJson = JsonUtility.ToJson(newChart);
+            File.WriteAllText($"{Application.dataPath}/Charts/{filename[0]}.{filename[1]}.{filename[2]}.json", newJson);
         }
     }
 }

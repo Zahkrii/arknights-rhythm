@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ public class GameController : MonoBehaviour
     private Chart data;
 
     public GameObject tapPrefab;
+    public GameObject dragPrefab;
     public Transform notesParent;
 
     //¼ÆÊ±Æ÷
@@ -22,22 +24,30 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        LoadChart();
+        DataManager.Instance.LoadTestChart();
+        DataManager.Instance.charts.TryGetValue("ÒõÔÆ»ð»¨", out data);
         audioSource.Stop();
         StartCoroutine("GameStart");
     }
 
     private void Update()
     {
-        if (isGameStart)
+        if (isGameStart && (index < data.notes.Count))
         {
             Timer += Time.deltaTime;
-            if (Timer > data.notes[index].time)
+            if (Timer > (data.notes[index].time - 10f / 5))
             {
-                Instantiate(tapPrefab, new Vector3(data.notes[index].pos, 1.001f, -4.5f), Quaternion.identity, notesParent);
+                if (data.notes[index].type == 0)
+                    Instantiate(tapPrefab, new Vector3(data.notes[index].pos, 1.001f, 5.5f), Quaternion.Euler(new Vector3(90, 0, 0)), notesParent);
+                if (data.notes[index].type == 1)
+                    Instantiate(dragPrefab, new Vector3(data.notes[index].pos, 1.001f, 5.5f), Quaternion.Euler(new Vector3(90, 0, 0)), notesParent);
                 index++;
             }
         }
+    }
+
+    private void GameOver()
+    {
     }
 
     private IEnumerator GameStart()
@@ -45,12 +55,5 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(3);
         isGameStart = true;
         audioSource.Play();
-    }
-
-    private void LoadChart()
-    {
-        string[] filePaths = Directory.GetFiles($"{Application.dataPath}/Charts", "*.json", SearchOption.AllDirectories);
-        string json = File.ReadAllText(filePaths[0]);
-        data = JsonUtility.FromJson<Chart>(json);
     }
 }

@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TapScript : MonoBehaviour
+public class DragScript : MonoBehaviour
 {
     private float Timer = -10f / 5;
 
@@ -19,14 +18,14 @@ public class TapScript : MonoBehaviour
         Timer += Time.deltaTime;
         if (add && Timer > -0.06f)
         {
-            DataManager.Instance.tapPaddingList.Add(this);
+            DataManager.Instance.dragPaddingList.Add(this);
             add = false;
             //this.GetComponent<SpriteRenderer>().color = Color.yellow;
             this.GetComponent<MeshRenderer>().material.color = Color.red;
         }
         else if (remove && Timer > 0.06f)
         {
-            DataManager.Instance.tapPaddingList.Remove(this);
+            DataManager.Instance.dragPaddingList.Remove(this);
             remove = false;
             //this.GetComponent<SpriteRenderer>().color = Color.white;
             this.GetComponent<MeshRenderer>().material.color = Color.white;
@@ -39,7 +38,7 @@ public class TapScript : MonoBehaviour
     {
         //生成特效
         //计算分数
-        DataManager.Instance.tapPaddingList.Remove(this);
+        DataManager.Instance.dragPaddingList.Remove(this);
         Destroy(gameObject);
     }
 
@@ -55,7 +54,7 @@ public class TapScript : MonoBehaviour
         {
             //生成特效
             //计算分数
-            DataManager.Instance.tapPaddingList.Remove(this);
+            DataManager.Instance.dragPaddingList.Remove(this);
             Destroy(gameObject);
             return true;
         }

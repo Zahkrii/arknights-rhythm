@@ -7,9 +7,11 @@ using UnityEngine;
 
 public class Chart
 {
+    public string name;
+    public string difficulty;
+    public short level;
     public int speed;
     public List<Note> notes;
-    public List<Link> links;
 }
 
 [Serializable]
@@ -22,25 +24,37 @@ public class Note
     public float time;
 }
 
-[Serializable]
-public class Link
-{
-    public List<LinkNote> notes;
-}
-
-[Serializable]
-public class LinkNote
-{
-    public int id;
-}
-
 public class DataManager : MonoBehaviour
 {
+    public static DataManager Instance { get; private set; }
+
+    //Tap 判定序列
+    public List<TapScript> tapPaddingList = new List<TapScript>();
+
+    //Drag 判定序列
+    public List<DragScript> dragPaddingList = new List<DragScript>();
+
+    //存储所有谱面（临时方案，后面可能采用 assetsbundle）
+    public Dictionary<string, Chart> charts = new Dictionary<string, Chart>();
+
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    private void Update()
+    public void LoadTestChart()
     {
+        string[] filePaths = Directory.GetFiles($"{Application.dataPath}/Charts", "*.json", SearchOption.AllDirectories);
+        string json = File.ReadAllText(filePaths[0]);
+        var data = JsonUtility.FromJson<Chart>(json);
+        charts.Add(data.name, data);
     }
 }

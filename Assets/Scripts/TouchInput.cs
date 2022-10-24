@@ -4,6 +4,8 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Security.Cryptography;
+using System;
 
 public class TouchInput : MonoBehaviour
 {
@@ -43,9 +45,35 @@ public class TouchInput : MonoBehaviour
         //鼠标操作
         GetMouseInputs();
 #endif
+        //判定操作
+        Padding();
 
         //生成触摸指示线
         GenerateTouchLine();
+    }
+
+    private void Padding()
+    {
+        for (int i = 0; i < DataManager.Instance.tapPaddingList.Count; i++)
+        {
+            for (int n = 0; n < tapPosXInfos.Count; n++)
+            {
+                if (DataManager.Instance.tapPaddingList[i].PaddingNote(tapPosXInfos[n]))
+                {
+                    tapPosXInfos.RemoveAt(n);
+                }
+            }
+        }
+        for (int i = 0; i < DataManager.Instance.dragPaddingList.Count; i++)
+        {
+            for (int n = 0; n < touchPosXInfos.Count; n++)
+            {
+                if (DataManager.Instance.dragPaddingList[i].PaddingNote(touchPosXInfos[n]))
+                {
+                    touchPosXInfos.RemoveAt(n);
+                }
+            }
+        }
     }
 
     /// <summary>
