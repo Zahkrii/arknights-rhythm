@@ -79,7 +79,7 @@ public class ChartTool : Editor
             }));
             //转换完成，准备保存
             var newJson = JsonUtility.ToJson(newChart);
-            File.WriteAllText($"{Application.dataPath}/Charts/{filename[0]}.{filename[1]}.{filename[2]}.json", newJson);
+            File.WriteAllText($"{Application.streamingAssetsPath}/Charts/{filename[0]}.json", newJson);
         }
     }
 }

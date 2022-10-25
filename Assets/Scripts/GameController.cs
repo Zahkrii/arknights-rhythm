@@ -24,8 +24,10 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        DataManager.Instance.LoadTestChart();
-        DataManager.Instance.charts.TryGetValue("ÒõÔÆ»ð»¨", out data);
+        DataManager.Instance.LoadChart("ÒõÔÆ»ð»¨", (Chart chart) =>
+        {
+            data = chart;
+        });
         audioSource.Stop();
         StartCoroutine("GameStart");
     }
