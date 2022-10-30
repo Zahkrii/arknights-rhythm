@@ -3,15 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     private AudioSource audioSource;
     private Chart data;
 
-    public GameObject tapPrefab;
-    public GameObject dragPrefab;
-    public Transform notesParent;
+    [SerializeField] private GameObject tapPrefab;
+    [SerializeField] private GameObject dragPrefab;
+    [SerializeField] private Transform notesParent;
+    [SerializeField] private Slider progressBar;
+
+    [SerializeField] private GameObject perfectVFX;
+    [SerializeField] private GameObject goodVFX;
+    [SerializeField] private GameObject missVFX;
 
     //¼ÆÊ±Æ÷
     private float Timer = 0;
@@ -23,7 +29,9 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 120;
         audioSource = GetComponent<AudioSource>();
+        progressBar.value = 0;
         DataManager.Instance.LoadChart("ÒõÔÆ»ð»¨", (Chart chart) =>
         {
             data = chart;
@@ -40,12 +48,33 @@ public class GameController : MonoBehaviour
             if (Timer > (data.notes[index].time - 10f / 5))
             {
                 if (data.notes[index].type == 0)
-                    Instantiate(tapPrefab, new Vector3(data.notes[index].pos, 1.001f, 5.5f), Quaternion.Euler(new Vector3(90, 0, 0)), notesParent);
+                {
+                    GameObject go = Instantiate(
+                        tapPrefab,
+                        new Vector3(data.notes[index].pos, 1.001f, 5.5f),
+                        Quaternion.Euler(new Vector3(90, 0, 0)),
+                        notesParent);
+                    Vector3 scale = go.transform.localScale;
+                    scale.x *= data.notes[index].size;
+                    go.transform.localScale = scale;
+                }
+
                 if (data.notes[index].type == 1)
-                    Instantiate(dragPrefab, new Vector3(data.notes[index].pos, 1.001f, 5.5f), Quaternion.Euler(new Vector3(90, 0, 0)), notesParent);
+                {
+                    GameObject go = Instantiate(
+                        dragPrefab,
+                        new Vector3(data.notes[index].pos, 1.001f, 5.5f),
+                        Quaternion.Euler(new Vector3(90, 0, 0)),
+                        notesParent);
+                    Vector3 scale = go.transform.localScale;
+                    scale.x *= data.notes[index].size;
+                    go.transform.localScale = scale;
+                }
+
                 index++;
             }
         }
+        progressBar.value = Mathf.Clamp((audioSource.time) / audioSource.clip.length, 0, 1);
     }
 
     private void GameOver()
@@ -55,7 +84,37 @@ public class GameController : MonoBehaviour
     private IEnumerator GameStart()
     {
         yield return new WaitForSeconds(3);
+        ScoreManager.Instance.TotalNotes = data.notes.Count;
         isGameStart = true;
         audioSource.Play();
+    }
+
+    public void ShowPaddingEffect(float hitTime, float xPos)
+    {
+        if (Mathf.Abs(hitTime) <= 0.085f)
+        {
+            Instantiate(
+                perfectVFX,
+                new Vector3(xPos, 1.001f, 5.5f),
+                Quaternion.Euler(new Vector3(0, 0, 0)),
+                notesParent);
+        }
+        else if (Mathf.Abs(hitTime) <= 0.17f)
+        {
+            Instantiate(
+                goodVFX,
+                new Vector3(xPos, 1.001f, 5.5f),
+                Quaternion.Euler(new Vector3(0, 0, 0)),
+                notesParent);
+        }
+    }
+
+    public void ShowMissEffect(float xPos)
+    {
+        Instantiate(
+                missVFX,
+                new Vector3(xPos, 1.001f, 5.5f),
+                Quaternion.Euler(new Vector3(0, 0, 0)),
+                notesParent);
     }
 }

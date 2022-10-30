@@ -13,6 +13,7 @@ public class Chart
     public string difficulty;
     public short level;
     public int speed;
+    public int count;
     public List<Note> notes;
 }
 
@@ -37,7 +38,7 @@ public class DataManager : MonoBehaviour
     public List<DragScript> dragPaddingList = new List<DragScript>();
 
     //存储所有谱面（临时方案，后面可能采用 assetsbundle）
-    public Dictionary<string, Chart> charts = new Dictionary<string, Chart>();
+    //public Dictionary<string, Chart> charts = new Dictionary<string, Chart>();
 
     private void Awake()
     {

@@ -16,19 +16,15 @@ public class DragScript : MonoBehaviour
     private void Update()
     {
         Timer += Time.deltaTime;
-        if (add && Timer > -0.06f)
+        if (add && Timer >= -0.05f)
         {
             DataManager.Instance.dragPaddingList.Add(this);
             add = false;
-            //this.GetComponent<SpriteRenderer>().color = Color.yellow;
-            this.GetComponent<MeshRenderer>().material.color = Color.red;
         }
-        else if (remove && Timer > 0.06f)
+        else if (remove && Timer > 0.17f)
         {
             DataManager.Instance.dragPaddingList.Remove(this);
             remove = false;
-            //this.GetComponent<SpriteRenderer>().color = Color.white;
-            this.GetComponent<MeshRenderer>().material.color = Color.white;
             Miss();
         }
         transform.Translate(0, -5 * Time.deltaTime, 0);
@@ -38,6 +34,8 @@ public class DragScript : MonoBehaviour
     {
         //生成特效
         //计算分数
+        ScoreManager.Instance.MissNote();
+        //从判定序列移除
         DataManager.Instance.dragPaddingList.Remove(this);
         Destroy(gameObject);
     }
@@ -54,6 +52,8 @@ public class DragScript : MonoBehaviour
         {
             //生成特效
             //计算分数
+            ScoreManager.Instance.ScoreDrag();
+            //从判定序列移除
             DataManager.Instance.dragPaddingList.Remove(this);
             Destroy(gameObject);
             return true;

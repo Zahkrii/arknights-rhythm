@@ -52,6 +52,9 @@ public class TouchInput : MonoBehaviour
         GenerateTouchLine();
     }
 
+    /// <summary>
+    /// ÅÐ¶¨ÊÇ·ñ»÷ÖÐ
+    /// </summary>
     private void Padding()
     {
         for (int i = 0; i < DataManager.Instance.tapPaddingList.Count; i++)
