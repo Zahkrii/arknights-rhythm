@@ -31,6 +31,12 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text comboText;
 
+    [Header("Debug")]
+    [SerializeField] private TMP_Text bestComboText;
+
+    [SerializeField] private TMP_Text comboScoreText;
+    [SerializeField] private TMP_Text paddingScoreText;
+
     private void Awake()
     {
         if (Instance == null)
@@ -82,6 +88,8 @@ public class ScoreManager : MonoBehaviour
         if (_comboCount == _bestCombo)
         {
             _bestCombo++;
+            //Debug
+            bestComboText.text = _bestCombo.ToString();
             _comboScore = (_bestCombo / _totalNotes) * 100000;
         }
         _comboCount++;
@@ -89,6 +97,10 @@ public class ScoreManager : MonoBehaviour
         //¸üÐÂUI
         scoreText.text = Mathf.CeilToInt(Mathf.Clamp(_paddingScore + _comboScore, 0, 1000000)).ToString();
         comboText.text = _comboCount.ToString();
+
+        //Debug
+        //comboScoreText.text = Mathf.CeilToInt(_comboScore).ToString();
+        //paddingScoreText.text = Mathf.CeilToInt(_paddingScore).ToString();
     }
 
     public void MissNote()

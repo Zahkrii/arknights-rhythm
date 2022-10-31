@@ -15,10 +15,6 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform notesParent;
     [SerializeField] private Slider progressBar;
 
-    [SerializeField] private GameObject perfectVFX;
-    [SerializeField] private GameObject goodVFX;
-    [SerializeField] private GameObject missVFX;
-
     //¼ÆÊ±Æ÷
     private float Timer = 0;
 
@@ -57,6 +53,7 @@ public class GameController : MonoBehaviour
                     Vector3 scale = go.transform.localScale;
                     scale.x *= data.notes[index].size;
                     go.transform.localScale = scale;
+                    go.GetComponent<TapScript>().Size = data.notes[index].size;
                 }
 
                 if (data.notes[index].type == 1)
@@ -69,6 +66,7 @@ public class GameController : MonoBehaviour
                     Vector3 scale = go.transform.localScale;
                     scale.x *= data.notes[index].size;
                     go.transform.localScale = scale;
+                    go.GetComponent<DragScript>().Size = data.notes[index].size;
                 }
 
                 index++;
@@ -87,34 +85,5 @@ public class GameController : MonoBehaviour
         ScoreManager.Instance.TotalNotes = data.notes.Count;
         isGameStart = true;
         audioSource.Play();
-    }
-
-    public void ShowPaddingEffect(float hitTime, float xPos)
-    {
-        if (Mathf.Abs(hitTime) <= 0.085f)
-        {
-            Instantiate(
-                perfectVFX,
-                new Vector3(xPos, 1.001f, 5.5f),
-                Quaternion.Euler(new Vector3(0, 0, 0)),
-                notesParent);
-        }
-        else if (Mathf.Abs(hitTime) <= 0.17f)
-        {
-            Instantiate(
-                goodVFX,
-                new Vector3(xPos, 1.001f, 5.5f),
-                Quaternion.Euler(new Vector3(0, 0, 0)),
-                notesParent);
-        }
-    }
-
-    public void ShowMissEffect(float xPos)
-    {
-        Instantiate(
-                missVFX,
-                new Vector3(xPos, 1.001f, 5.5f),
-                Quaternion.Euler(new Vector3(0, 0, 0)),
-                notesParent);
     }
 }

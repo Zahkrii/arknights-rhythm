@@ -149,7 +149,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2680146211281164071, guid: 314c6dea4f8f6e84480b7e7734678c94, type: 3}
       propertyPath: m_Name
-      value: GoodVFX (2)
+      value: GoodVFX
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 314c6dea4f8f6e84480b7e7734678c94, type: 3}
+--- !u!1 &6782612050164466712 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2680146211281164071, guid: 314c6dea4f8f6e84480b7e7734678c94, type: 3}
+  m_PrefabInstance: {fileID: 8867982933186810687}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3904512352139763394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6782612050164466712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a83347572e480d64abf4ce06bf77eec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

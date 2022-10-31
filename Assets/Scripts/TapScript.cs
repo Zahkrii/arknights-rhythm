@@ -9,9 +9,11 @@ public class TapScript : MonoBehaviour
 
     private bool add = true, remove = true;
 
-    private void Awake()
-    {
-    }
+    //Note数据
+    private float size = 1;
+
+    public float Size
+    { set { size = value; } }
 
     // Update is called once per frame
     private void Update()
@@ -34,6 +36,7 @@ public class TapScript : MonoBehaviour
     private void Miss()
     {
         //生成特效
+        VFXController.Instance.ShowMissEffect(this.transform.position.x);
         //计算分数
         ScoreManager.Instance.MissNote();
         //从判定序列移除
@@ -49,9 +52,11 @@ public class TapScript : MonoBehaviour
     public bool PaddingNote(float xPos)
     {
         float x = Mathf.Abs(transform.position.x - xPos);
-        if (x < 0.4)
+        if (x < 0.4 * size)
         {
             //生成特效
+            VFXController.Instance.ShowPaddingEffect(Timer, xPos);
+            SFXController.Instance.PlaySFX();
             //计算分数
             ScoreManager.Instance.ScoreTap(Timer);
             //从判定序列移除

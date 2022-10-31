@@ -10221,7 +10221,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614996}
   m_ExposedName: Text Color
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 4
   m_Category: 
   m_Min:
     m_Type:
