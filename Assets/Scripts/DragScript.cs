@@ -55,7 +55,7 @@ public class DragScript : MonoBehaviour
         {
             //生成特效
             VFXController.Instance.ShowDragEffect(xPos);
-            SFXController.Instance.PlaySFX();
+            AudioController.Instance.PlaySFX();
             //计算分数
             ScoreManager.Instance.ScoreDrag();
             //从判定序列移除

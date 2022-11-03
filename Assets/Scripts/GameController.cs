@@ -7,13 +7,11 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    private AudioSource audioSource;
     private Chart data;
 
     [SerializeField] private GameObject tapPrefab;
     [SerializeField] private GameObject dragPrefab;
     [SerializeField] private Transform notesParent;
-    [SerializeField] private Slider progressBar;
 
     //¼ÆÊ±Æ÷
     private float Timer = 0;
@@ -26,13 +24,11 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 120;
-        audioSource = GetComponent<AudioSource>();
-        progressBar.value = 0;
+        AudioController.Instance.InitProgressBar();
         DataManager.Instance.LoadChart("ÒõÔÆ»ð»¨", (Chart chart) =>
         {
             data = chart;
         });
-        audioSource.Stop();
         StartCoroutine("GameStart");
     }
 
@@ -72,7 +68,6 @@ public class GameController : MonoBehaviour
                 index++;
             }
         }
-        progressBar.value = Mathf.Clamp((audioSource.time) / audioSource.clip.length, 0, 1);
     }
 
     private void GameOver()
@@ -84,6 +79,6 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(3);
         ScoreManager.Instance.TotalNotes = data.notes.Count;
         isGameStart = true;
-        audioSource.Play();
+        AudioController.Instance.PlayMusic();
     }
 }

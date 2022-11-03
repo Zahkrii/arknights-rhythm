@@ -56,7 +56,7 @@ public class TapScript : MonoBehaviour
         {
             //生成特效
             VFXController.Instance.ShowPaddingEffect(Timer, xPos);
-            SFXController.Instance.PlaySFX();
+            AudioController.Instance.PlaySFX();
             //计算分数
             ScoreManager.Instance.ScoreTap(Timer);
             //从判定序列移除

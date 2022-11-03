@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
+using static UnityEngine.Rendering.DebugUI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class ScoreManager : MonoBehaviour
     //总note数
     private float _totalNotes = 0;
 
+    //提供总note数的修改与获取
     public float TotalNotes
     { get { return _totalNotes; } set { _totalNotes = value; } }
 
@@ -31,11 +34,8 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text comboText;
 
-    [Header("Debug")]
-    [SerializeField] private TMP_Text bestComboText;
-
-    [SerializeField] private TMP_Text comboScoreText;
-    [SerializeField] private TMP_Text paddingScoreText;
+    private RectTransform scoreTransform;
+    private RectTransform comboTransform;
 
     private void Awake()
     {
@@ -49,8 +49,11 @@ public class ScoreManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        //初始化
         scoreText.text = "0";
         comboText.text = "0";
+        scoreTransform = scoreText.gameObject.GetComponent<RectTransform>();
+        comboTransform = comboText.gameObject.GetComponent<RectTransform>();
     }
 
     public void ScoreTap(float hitTime)
@@ -70,13 +73,21 @@ public class ScoreManager : MonoBehaviour
         if (_comboCount == _bestCombo)
         {
             _bestCombo++;
+            //Debug
+            DebugPanel.Instance.LogBestCombo(_bestCombo);
             _comboScore = (_bestCombo / _totalNotes) * 100000;
         }
         _comboCount++;
 
         //更新UI
+        DOTween.To((value) => { scoreTransform.localScale = new Vector3(value, value); }, 1.5f, 1, 0.1f);
         scoreText.text = Mathf.CeilToInt(Mathf.Clamp(_paddingScore + _comboScore, 0, 1000000)).ToString();
+        DOTween.To((value) => { comboTransform.localScale = new Vector3(value, value); }, 1.5f, 1, 0.1f);
         comboText.text = _comboCount.ToString();
+
+        //Debug
+        DebugPanel.Instance.LogPaddingScore(_paddingScore);
+        DebugPanel.Instance.LogComboScore(_comboScore);
     }
 
     public void ScoreDrag()
@@ -89,23 +100,26 @@ public class ScoreManager : MonoBehaviour
         {
             _bestCombo++;
             //Debug
-            bestComboText.text = _bestCombo.ToString();
+            DebugPanel.Instance.LogBestCombo(_bestCombo);
             _comboScore = (_bestCombo / _totalNotes) * 100000;
         }
         _comboCount++;
 
         //更新UI
+        DOTween.To((value) => { scoreTransform.localScale = new Vector3(value, value); }, 1.5f, 1, 0.1f);
         scoreText.text = Mathf.CeilToInt(Mathf.Clamp(_paddingScore + _comboScore, 0, 1000000)).ToString();
+        DOTween.To((value) => { comboTransform.localScale = new Vector3(value, value); }, 2f, 1, 0.1f);
         comboText.text = _comboCount.ToString();
 
         //Debug
-        //comboScoreText.text = Mathf.CeilToInt(_comboScore).ToString();
-        //paddingScoreText.text = Mathf.CeilToInt(_paddingScore).ToString();
+        DebugPanel.Instance.LogPaddingScore(_paddingScore);
+        DebugPanel.Instance.LogComboScore(_comboScore);
     }
 
     public void MissNote()
     {
         _comboCount = 0;
+        DOTween.To((value) => { comboTransform.localScale = new Vector3(value, value); }, 2f, 1, 0.1f);
         comboText.text = _comboCount.ToString();
     }
 }
