@@ -57,6 +57,7 @@ public class TouchInput : MonoBehaviour
     /// </summary>
     private void Padding()
     {
+        //Tap判定
         for (int i = 0; i < DataManager.Instance.tapPaddingList.Count; i++)
         {
             for (int n = 0; n < tapPosXInfos.Count; n++)
@@ -67,6 +68,7 @@ public class TouchInput : MonoBehaviour
                 }
             }
         }
+        //Drag判定
         for (int i = 0; i < DataManager.Instance.dragPaddingList.Count; i++)
         {
             for (int n = 0; n < touchPosXInfos.Count; n++)
@@ -74,6 +76,28 @@ public class TouchInput : MonoBehaviour
                 if (DataManager.Instance.dragPaddingList[i].PaddingNote(touchPosXInfos[n]))
                 {
                     touchPosXInfos.RemoveAt(n);
+                }
+            }
+        }
+        //Hold Head判定
+        for (int i = 0; i < DataManager.Instance.holdHeadPaddingList.Count; i++)
+        {
+            for (int n = 0; n < tapPosXInfos.Count; n++)
+            {
+                if (DataManager.Instance.holdHeadPaddingList[i].HeadPadding(tapPosXInfos[n]))
+                {
+                    tapPosXInfos.RemoveAt(n);
+                }
+            }
+        }
+        //Hold判定
+        for (int i = 0; i < DataManager.Instance.holdingPaddingList.Count; i++)
+        {
+            for (int n = 0; n < tapPosXInfos.Count; n++)
+            {
+                if (DataManager.Instance.holdingPaddingList[i].HoldingPadding(tapPosXInfos[n]))
+                {
+                    tapPosXInfos.RemoveAt(n);
                 }
             }
         }

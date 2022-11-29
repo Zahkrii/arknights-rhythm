@@ -47,25 +47,60 @@ public class ChartTool : Editor
             var json = File.ReadAllText(filePaths[j]);
             var data = JsonUtility.FromJson<ChartOrigin>(json);
 
+            int holdStartIndex = -1;
+
             for (int i = 0; i < data.links.Count; i++) //循环读取links
             {
                 foreach (var linknote in data.links[i].notes)//读取其中一个link，循环读取其中的notes
                 {
-                    foreach (var note in data.notes)
+                    for (int k = 0; k < data.notes.Count; k++)
                     {
-                        if (note.id == linknote.id)
+                        if (data.notes[k].id == linknote.id)
                         {
-                            note.type = 1;
+                            data.notes[k].type = 1;
+                        }
+                        if (data.notes[k].size == 1.5f)//hold开始
+                        {
+                            data.notes[k].type = 2;
+                            holdStartIndex = k;
+                        }
+                        if (data.notes[k].size == 0.5f)//hold结束
+                        {
+                            if (holdStartIndex >= 0)
+                            {
+                                data.notes[holdStartIndex]._time = data.notes[holdStartIndex].time - data.notes[k].time;
+                                data.notes.RemoveAt(k);
+                            }
+                            holdStartIndex = -1;
                         }
                     }
                 }
             }
+
+            for (int k = 0; k < data.notes.Count; k++)
+            {
+                if (Mathf.Abs(data.notes[k].size - 1.5f) < Mathf.Epsilon)//hold开始
+                {
+                    data.notes[k].type = 2;
+                    holdStartIndex = k;
+                    continue;
+                }
+                if (Mathf.Abs(data.notes[k].size - 0.5f) < Mathf.Epsilon)//hold结束
+                {
+                    if (holdStartIndex >= 0)
+                    {
+                        data.notes[holdStartIndex]._time = data.notes[holdStartIndex].time - data.notes[k].time;
+                        data.notes.RemoveAt(k);
+                    }
+                    holdStartIndex = -1;
+                }
+            }
+
             Chart newChart = new Chart();
             var filename = filePaths[j].Substring(filePaths[j].LastIndexOf('\\') + 1).Split('.');
             newChart.name = filename[0];
             newChart.difficulty = filename[1];
             newChart.level = short.Parse(filename[2]);
-            newChart.speed = data.speed;
             newChart.notes = new List<Note>(data.notes.ConvertAll(e =>
             {
                 return new Note
@@ -73,13 +108,15 @@ public class ChartTool : Editor
                     id = e.id,
                     type = e.type,
                     pos = e.pos,
-                    size = e.size,
+                    //size = e.size,
                     time = e.time,
+                    holdTime = e._time
                 };
             }));
             //转换完成，准备保存
             var newJson = JsonUtility.ToJson(newChart);
             File.WriteAllText($"{Application.streamingAssetsPath}/Charts/{filename[0]}.json", newJson);
+            Debug.Log("Done.");
         }
     }
 }
