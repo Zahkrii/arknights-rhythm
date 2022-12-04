@@ -58,44 +58,44 @@ public class TouchInput : MonoBehaviour
     private void Padding()
     {
         //Tap判定
-        for (int i = 0; i < DataManager.Instance.tapPaddingList.Count; i++)
+        for (int i = 0; i < ChartManager.Instance.tapPaddingList.Count; i++)
         {
             for (int n = 0; n < tapPosXInfos.Count; n++)
             {
-                if (DataManager.Instance.tapPaddingList[i].PaddingNote(tapPosXInfos[n]))
+                if (ChartManager.Instance.tapPaddingList[i].PaddingNote(tapPosXInfos[n]))
                 {
                     tapPosXInfos.RemoveAt(n);
                 }
             }
         }
         //Drag判定
-        for (int i = 0; i < DataManager.Instance.dragPaddingList.Count; i++)
+        for (int i = 0; i < ChartManager.Instance.dragPaddingList.Count; i++)
         {
             for (int n = 0; n < touchPosXInfos.Count; n++)
             {
-                if (DataManager.Instance.dragPaddingList[i].PaddingNote(touchPosXInfos[n]))
+                if (ChartManager.Instance.dragPaddingList[i].PaddingNote(touchPosXInfos[n]))
                 {
                     touchPosXInfos.RemoveAt(n);
                 }
             }
         }
         //Hold Head判定
-        for (int i = 0; i < DataManager.Instance.holdHeadPaddingList.Count; i++)
+        for (int i = 0; i < ChartManager.Instance.holdHeadPaddingList.Count; i++)
         {
             for (int n = 0; n < tapPosXInfos.Count; n++)
             {
-                if (DataManager.Instance.holdHeadPaddingList[i].HeadPadding(tapPosXInfos[n]))
+                if (ChartManager.Instance.holdHeadPaddingList[i].HeadPadding(tapPosXInfos[n]))
                 {
                     tapPosXInfos.RemoveAt(n);
                 }
             }
         }
         //Hold判定
-        for (int i = 0; i < DataManager.Instance.holdingPaddingList.Count; i++)
+        for (int i = 0; i < ChartManager.Instance.holdingPaddingList.Count; i++)
         {
             for (int n = 0; n < tapPosXInfos.Count; n++)
             {
-                if (DataManager.Instance.holdingPaddingList[i].HoldingPadding(tapPosXInfos[n]))
+                if (ChartManager.Instance.holdingPaddingList[i].HoldingPadding(tapPosXInfos[n]))
                 {
                     tapPosXInfos.RemoveAt(n);
                 }

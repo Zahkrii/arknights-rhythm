@@ -19,12 +19,12 @@ public class TapScript : MonoBehaviour
         //时间到添加到判定序列
         if (add && Timer > -0.17f)
         {
-            DataManager.Instance.tapPaddingList.Add(this);
+            ChartManager.Instance.tapPaddingList.Add(this);
             add = false;
         }
         else if (remove && Timer > 0.17f)
         {
-            DataManager.Instance.tapPaddingList.Remove(this);
+            ChartManager.Instance.tapPaddingList.Remove(this);
             remove = false;
             Miss();
         }
@@ -39,7 +39,7 @@ public class TapScript : MonoBehaviour
         //计算分数
         ScoreManager.Instance.MissNote();
         //从判定序列移除
-        DataManager.Instance.tapPaddingList.Remove(this);
+        ChartManager.Instance.tapPaddingList.Remove(this);
         Destroy(gameObject);
     }
 
@@ -55,11 +55,11 @@ public class TapScript : MonoBehaviour
         {
             //生成特效
             VFXManager.Instance.ShowPaddingEffect(Timer, xPos);
-            AudioManager.Instance.PlaySFX("hit");
+            AudioManager.Instance.PlayHitSFX();
             //计算分数
             ScoreManager.Instance.ScoreTap(Timer);
             //从判定序列移除
-            DataManager.Instance.tapPaddingList.Remove(this);
+            ChartManager.Instance.tapPaddingList.Remove(this);
             Destroy(gameObject);
             return true;
         }

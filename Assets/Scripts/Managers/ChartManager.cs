@@ -26,11 +26,19 @@ public class Note
     public float holdTime;
 }
 
-public class DataManager : MonoBehaviour
+/// <summary>
+/// 谱面数据存储与读取
+/// </summary>
+public class ChartManager : MonoSingleton<ChartManager>
 {
-    public static DataManager Instance { get; private set; }
+    //存储所有谱面资源
+    public Dictionary<string, ChartAsset> chartAssets = new Dictionary<string, ChartAsset>();
 
-    //Tap 判定序列
+    [Header("谱面资源列表")]
+    [SerializeField] private List<SerializableKeyValuePair> chartAssetList = new List<SerializableKeyValuePair>();
+
+    // Tap 判定序列
+    [Header("谱面数据")]
     public List<TapScript> tapPaddingList = new List<TapScript>();
 
     //Drag 判定序列
@@ -42,22 +50,41 @@ public class DataManager : MonoBehaviour
     //Hold 判定序列
     public List<HoldScript> holdingPaddingList = new List<HoldScript>();
 
-    //note下落速度
-    public float speed = 1f;
-
     //public float holdTime = 0f;
 
-    private void Awake()
+    [Serializable]
+    private struct SerializableKeyValuePair
     {
-        if (Instance == null)
+        public string Key;
+        public ChartAsset Value;
+
+        public SerializableKeyValuePair(string key, ChartAsset value)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Key = key;
+            Value = value;
         }
-        else
+    }
+
+    /// <summary>
+    /// 初始化字典，使用前必须执行
+    /// </summary>
+    public void InitDictionary()
+    {
+        foreach (var item in chartAssetList)
         {
-            Destroy(gameObject);
+            chartAssets.Add(item.Key, item.Value);
         }
+    }
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        InitDictionary();
+    }
+
+    public Chart LoadChart(string key)
+    {
+        return JsonUtility.FromJson<Chart>(chartAssets[key].chart.text);
     }
 
     public void LoadChart(string name, Action<Chart> complete = null)

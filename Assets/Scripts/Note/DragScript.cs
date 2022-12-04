@@ -20,12 +20,12 @@ public class DragScript : MonoBehaviour
         Timer += Time.deltaTime;
         if (add && Timer >= -0.05f)
         {
-            DataManager.Instance.dragPaddingList.Add(this);
+            ChartManager.Instance.dragPaddingList.Add(this);
             add = false;
         }
         else if (remove && Timer > 0.17f)
         {
-            DataManager.Instance.dragPaddingList.Remove(this);
+            ChartManager.Instance.dragPaddingList.Remove(this);
             remove = false;
             Miss();
         }
@@ -39,7 +39,7 @@ public class DragScript : MonoBehaviour
         //计算分数
         ScoreManager.Instance.MissNote();
         //从判定序列移除
-        DataManager.Instance.dragPaddingList.Remove(this);
+        ChartManager.Instance.dragPaddingList.Remove(this);
         Destroy(gameObject);
     }
 
@@ -55,11 +55,11 @@ public class DragScript : MonoBehaviour
         {
             //生成特效
             VFXManager.Instance.ShowDragEffect(xPos);
-            AudioManager.Instance.PlaySFX("hit");
+            AudioManager.Instance.PlayHitSFX();
             //计算分数
             ScoreManager.Instance.ScoreDrag();
             //从判定序列移除
-            DataManager.Instance.dragPaddingList.Remove(this);
+            ChartManager.Instance.dragPaddingList.Remove(this);
             Destroy(gameObject);
             return true;
         }

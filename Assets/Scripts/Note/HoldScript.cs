@@ -38,12 +38,12 @@ public class HoldScript : MonoBehaviour
         //时间到添加到判定序列
         if (add && Timer > -0.17f)
         {
-            DataManager.Instance.holdHeadPaddingList.Add(this);
+            ChartManager.Instance.holdHeadPaddingList.Add(this);
             add = false;
         }
         else if (remove && Timer > 0.17f)
         {
-            DataManager.Instance.holdHeadPaddingList.Remove(this);
+            ChartManager.Instance.holdHeadPaddingList.Remove(this);
             remove = false;
             Miss();
         }
@@ -57,8 +57,8 @@ public class HoldScript : MonoBehaviour
         material.color = new Color(1, 1, 1, 0.3f);
         //计算分数
         //移出判定序列
-        DataManager.Instance.holdHeadPaddingList.Remove(this);
-        DataManager.Instance.holdingPaddingList.Remove(this);
+        ChartManager.Instance.holdHeadPaddingList.Remove(this);
+        ChartManager.Instance.holdingPaddingList.Remove(this);
         Destroy(gameObject);
     }
 
@@ -69,9 +69,9 @@ public class HoldScript : MonoBehaviour
         {
             //从头部判定序列移除
             remove = false;
-            DataManager.Instance.holdHeadPaddingList.Remove(this);
+            ChartManager.Instance.holdHeadPaddingList.Remove(this);
             //加入holding判定
-            DataManager.Instance.holdingPaddingList.Add(this);
+            ChartManager.Instance.holdingPaddingList.Add(this);
             holding = true;
             StartCoroutine("HoldingTimer");
             //Destroy(gameObject);
@@ -102,7 +102,7 @@ public class HoldScript : MonoBehaviour
             transform.Translate(0, 7.5f * Time.deltaTime, 0);
             if (holdingTime > holdTime)
             {
-                DataManager.Instance.holdingPaddingList.Remove(this);
+                ChartManager.Instance.holdingPaddingList.Remove(this);
                 //生成特效
                 //计算分数
                 Destroy(gameObject);

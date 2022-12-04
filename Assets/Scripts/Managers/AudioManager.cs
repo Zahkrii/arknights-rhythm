@@ -10,12 +10,17 @@ public class AudioManager : MonoSingleton<AudioManager>
     //音效播放源
     private AudioSource sfxSource;
 
+    //谱面打击音效播放源
+    private AudioSource hitSource;
+
     //音乐播放源
     private AudioSource musicSource;
 
     [Header("音频文件")]
+    [Tooltip("存储界面点击音效，其他特效相关音效")]
     [SerializeField] private AudioAsset sfxAssets;
 
+    [Tooltip("存储游戏BGM，不含关卡曲目")]
     [SerializeField] private AudioAsset musicAssets;
 
     //获取/设置音效音量，使用属性，设置的同时更新PlayerPrefs
@@ -29,6 +34,20 @@ public class AudioManager : MonoSingleton<AudioManager>
         {
             sfxSource.volume = value;
             PlayerPrefs.SetFloat("SFXVolume", value);
+        }
+    }
+
+    //获取/设置谱面打击音效音量，使用属性，设置的同时更新PlayerPrefs
+    public float HitSFXVolume
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("HitSFXVolume", 0.6f);
+        }
+        set
+        {
+            sfxSource.volume = value;
+            PlayerPrefs.SetFloat("HitSFXVolume", value);
         }
     }
 
@@ -57,6 +76,9 @@ public class AudioManager : MonoSingleton<AudioManager>
         sfxSource = this.gameObject.AddComponent<AudioSource>();
         sfxSource.loop = false;
 
+        hitSource = this.gameObject.AddComponent<AudioSource>();
+        hitSource.loop = false;
+
         musicAssets.InitDictionary();
         sfxAssets.InitDictionary();
     }
@@ -82,15 +104,6 @@ public class AudioManager : MonoSingleton<AudioManager>
                 musicSource.loop = true;
             musicSource.Play();
         }
-    }
-
-    /// <summary>
-    /// 获取音乐播放进度
-    /// </summary>
-    /// <returns></returns>
-    public float GetMusicPlayProgress()
-    {
-        return Mathf.Clamp01((musicSource.time) / musicSource.clip.length);
     }
 
     /// <summary>
@@ -136,4 +149,53 @@ public class AudioManager : MonoSingleton<AudioManager>
     }
 
     #endregion 播放音效
+
+    #region 谱面相关
+
+    /// <summary>
+    /// 播放谱面音乐
+    /// </summary>
+    /// <param name="name">音乐名称</param>
+    public void PlayChartMusic(string name)
+    {
+        //如果玩家设置音量低于0.1f，则完全不播放，节省性能
+        if (this.MusicVolume < 0.1f)
+            return;
+        //播放前检查键值是否存在
+        try
+        {
+            if (ChartManager.Instance.chartAssets.ContainsKey(name))
+            {
+                musicSource.clip = ChartManager.Instance.chartAssets[name].music;
+                musicSource.Play();
+            }
+        }
+        catch
+        {
+        }
+    }
+
+    /// <summary>
+    /// 播放谱面打击音效
+    /// </summary>
+    public void PlayHitSFX()
+    {
+        //如果玩家设置音量低于0.1f，则完全不播放，节省性能
+        if (this.SFXVolume < 0.1f)
+            return;
+        //播放前检查键值是否存在
+        if (sfxAssets.audioClip.ContainsKey(SettingsManager.HitSFX))
+            sfxSource.PlayOneShot(sfxAssets.audioClip[SettingsManager.HitSFX]);
+    }
+
+    /// <summary>
+    /// 获取谱面音乐播放进度
+    /// </summary>
+    /// <returns></returns>
+    public float GetMusicPlayProgress()
+    {
+        return Mathf.Clamp01((musicSource.time) / musicSource.clip.length);
+    }
+
+    #endregion 谱面相关
 }

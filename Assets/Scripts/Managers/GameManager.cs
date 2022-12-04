@@ -29,11 +29,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 120;
-        DataManager.Instance.LoadChart("ÒõÔÆ»ð»¨", (Chart chart) =>
-        {
-            data = chart;
-        });
-
+        //ChartManager.Instance.LoadChart("ÒõÔÆ»ð»¨", (Chart chart) =>
+        //{
+        //    data = chart;
+        //});
+        data = ChartManager.Instance.LoadChart("SE4");
         progressBar.value = 0;
     }
 
@@ -91,6 +91,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         ScoreManager.Instance.TotalNotes = data.notes.Count;
         isGameStart = true;
-        AudioManager.Instance.PlayMusic("SE4");
+        AudioManager.Instance.PlayChartMusic("SE4");
     }
 }
