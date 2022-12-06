@@ -15,36 +15,76 @@ public class SaveFile
 [Serializable]
 public class Opreator
 {
-    public string opreatorName; //干员代号
+    public short id; //干员ID
+    public short skinIndex = 0; //干员皮肤Index，从0开始
 }
 
 [Serializable]
 public class ChartScore
 {
-    public string name; //曲名
+    public short id; //曲目ID
 
     //简单难度（Easy）
-    public int paddingScoreEZ; //判定分，满分90万
+    public int paddingScoreEZ = 0; //判定分，满分90万
 
-    public int comboScoreEZ; //连击分，满分10万
+    public int comboScoreEZ = 0; //连击分，满分10万
 
     //普通难度（Normal）
-    public int paddingScoreNM; //判定分，满分90万
+    public int paddingScoreNM = 0; //判定分，满分90万
 
-    public int comboScoreNM; //连击分，满分10万
+    public int comboScoreNM = 0; //连击分，满分10万
 
     //困难难度（Hard）
-    public int paddingScoreHD; //判定分，满分90万
+    public int paddingScoreHD = 0; //判定分，满分90万
 
-    public int comboScoreHD; //连击分，满分10万
+    public int comboScoreHD = 0; //连击分，满分10万
 
     //超难难度（Insane）
-    public int paddingScoreIN; //判定分，满分90万
+    public int paddingScoreIN = 0; //判定分，满分90万
 
-    public int comboScoreIN; //连击分，满分10万
+    public int comboScoreIN = 0; //连击分，满分10万
 
     //FC：全连，连击分满分
     //AP：All Perfect，判定分加连击分达到100万
+
+    /// <summary>
+    /// 一个方便设置分数的方法
+    /// </summary>
+    /// <param name="difficulty">曲目难度</param>
+    /// <param name="paddingScore">判定分 [0,900000]</param>
+    /// <param name="comboScore">连击分 [0,100000]</param>
+    public void SetScore(Difficulty difficulty, int paddingScore, int comboScore)
+    {
+        paddingScore = Mathf.Clamp(paddingScore, 0, 900000);
+        comboScore = Mathf.Clamp(comboScore, 0, 100000);
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                {
+                    paddingScoreEZ = paddingScore;
+                    comboScoreEZ = comboScore;
+                    break;
+                }
+            case Difficulty.Normal:
+                {
+                    paddingScoreNM = paddingScore;
+                    comboScoreNM = comboScore;
+                    break;
+                }
+            case Difficulty.Hard:
+                {
+                    paddingScoreHD = paddingScore;
+                    comboScoreHD = comboScore;
+                    break;
+                }
+            case Difficulty.Insane:
+                {
+                    paddingScoreIN = paddingScore;
+                    comboScoreIN = comboScore;
+                    break;
+                }
+        }
+    }
 }
 
 public static class SaveManager
@@ -69,8 +109,20 @@ public static class SaveManager
         //新建存档
         SaveFile newSave = new SaveFile();
         newSave.playerID = playerID;
+        //初始化曲目
         newSave.chartScores = new List<ChartScore>();
-        newSave.opreators = new List<Opreator>();
+        foreach (ChartID id in Enum.GetValues(typeof(ChartID)))
+        {
+            newSave.chartScores.Add(new ChartScore { id = (short)id });
+        }
+        //初始化干员
+        newSave.opreators = new List<Opreator>
+        {
+            new Opreator { id = (short) OpreatorID.Amiya },
+            new Opreator { id = (short) OpreatorID.Logos },
+            new Opreator { id = (short) OpreatorID.Centaurea },
+            new Opreator { id = (short) OpreatorID.Mountain }
+        };
         //保存
         SaveToFile(newSave, FILENAME);
     }
@@ -88,7 +140,8 @@ public static class SaveManager
     /// </summary>
     public static void Close()
     {
-        SaveToFile(PlayerSave, FILENAME);
+        if (PlayerSave != null)
+            SaveToFile(PlayerSave, FILENAME);
         PlayerSave = null;
     }
 
@@ -100,6 +153,8 @@ public static class SaveManager
     {
         return File.Exists(Path.Combine(Application.persistentDataPath, $"{FILENAME}{FILENAME_EXTENSION}"));
     }
+
+    #region Json操作
 
     /// <summary>
     /// 保存存档
@@ -158,6 +213,8 @@ public static class SaveManager
             return default;
         }
     }
+
+    #endregion Json操作
 
     #region GZip解压缩
 

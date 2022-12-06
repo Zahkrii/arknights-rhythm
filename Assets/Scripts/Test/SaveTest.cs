@@ -38,6 +38,7 @@ public class SaveTest : MonoBehaviour
         //关于引用：
         //引用出来的存档 file 与 SaveManager 提供的 PlayerSave 都指向同一个实例，
         //使用引用还是直接使用 PlayerSave 都可以
+        //知识点：引用类型与值类型
         SaveManager.PlayerSave.playerID = "Mountain#CB05";
         Debug.Log($"【设置 SaveManager.PlayerSave，获取 file 】file.playID: {file.playerID}");
         file.playerID = "Simon#CB05";
@@ -45,48 +46,82 @@ public class SaveTest : MonoBehaviour
 
         //对存档操作完一定要保存到文件，使用 SaveManager.Close() 来保存存档
         //注意：一定要记得 Close！！！不然存档只会存于内存中，程序结束就没辣！！！
+        //还有一件事！引用出来的存档数据（这里的例子是 file）在调用 SaveManager.Close() 后虽然也能访问到，但对其更改并不会保存到文件
         SaveManager.Close();
 
         //总结
         //先 Open，再读写，最后 Close
 
-        SaveManager.Open();
+        #region 例子
 
-        Debug.Log($"playID: {SaveManager.PlayerSave.playerID}");
+        //SaveManager.Open();
 
         //读取或者设置存档里的数据等等
         // ...
 
-        SaveManager.Close();
+        //SaveManager.Close();
+
+        #endregion 例子
 
         //注意：存档读写涉及IO操作，应尽量减少 Open 跟 Close 的次数。
         //因此，尽量 Open 后统一读取或者设置存档数据，然后再 Close.
 
         #region 避免这样做
 
-        SaveManager.Open();
+        //SaveManager.Open();
 
-        Debug.Log($"playID: {SaveManager.PlayerSave.playerID}");
+        //Debug.Log($"playID: {SaveManager.PlayerSave.playerID}");
 
-        SaveManager.Close();
+        //SaveManager.Close();
 
-        SaveManager.Open();
+        //SaveManager.Open();
 
-        Debug.Log($"playID: {SaveManager.PlayerSave.playerID}");
+        //Debug.Log($"playID: {SaveManager.PlayerSave.playerID}");
 
-        SaveManager.Close();
+        //SaveManager.Close();
 
         #endregion 避免这样做
 
         #region 尽量这样做
 
-        SaveManager.Open();
+        //SaveManager.Open();
 
-        Debug.Log($"playID: {SaveManager.PlayerSave.playerID}");
-        Debug.Log($"playID: {SaveManager.PlayerSave.playerID}");
+        //Debug.Log($"playID: {SaveManager.PlayerSave.playerID}");
+        //Debug.Log($"playID: {SaveManager.PlayerSave.playerID}");
 
-        SaveManager.Close();
+        //SaveManager.Close();
 
         #endregion 尽量这样做
+
+        //关于曲目分数的读写
+        //因为 ChartID 与 chartScores 的 index 刚好对应，所以可以直接通过 (int)ChartID.L1_1 索引查找关卡 1-1 对应的曲目分数
+        SaveManager.Open();
+        //设置分数
+        //Tip：可以通过此方法来设置分数到关卡解锁的条件，然后再读取分数看关卡是否满足解锁条件，来解锁关卡，以进行测试
+        SaveManager.PlayerSave.chartScores[(int)ChartID.L1_5].SetScore(Difficulty.Easy, paddingScore: 850000, comboScore: 50000);
+        //读取分数
+        int paddingScore = SaveManager.PlayerSave.chartScores[(int)ChartID.L1_5].paddingScoreEZ;
+        Debug.Log($" - 关卡1-1 简单难度 - \n判定分：{paddingScore}\n连击分：{SaveManager.PlayerSave.chartScores[(int)ChartID.L1_5].comboScoreEZ}");
+        SaveManager.Close();
+
+        //关于已获得干员数据读取，与添加干员
+        SaveManager.Open();
+        //查找是否已有某个干员
+        SaveManager.PlayerSave.opreators.Exists(item => item.id == (short)OpreatorID.Amiya);
+        //添加新获得干员
+        SaveManager.PlayerSave.opreators.Add(new Opreator { id = (short)OpreatorID.Spot });
+        //获取特定一个干员数据
+        //SaveManager.PlayerSave.opreators[(short)OpreatorID.Amiya]
+        //获取特定一个干员的皮肤索引，约定皮肤索引从0开始，一个索引对应一套皮肤
+        Debug.Log(SaveManager.PlayerSave.opreators[(short)OpreatorID.Amiya].skinIndex);
+        //遍历所有已拥有干员
+        for (int i = 0; i < SaveManager.PlayerSave.opreators.Count; i++)
+        {
+            //SaveManager.PlayerSave.opreators[i]
+        }
+        //其实就是 List<T> 的操作，不想派生自定义 List<T> 来重写方法了
+
+        //最后
+        //存档使用了序列化成JSON字符串保存的形式，因为JSON本身的特性，有较多重复字符占用空间，于是又使用了Gzip对字符串进行压缩
     }
 }
