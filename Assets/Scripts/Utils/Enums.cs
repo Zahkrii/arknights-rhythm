@@ -37,5 +37,10 @@ public enum OpreatorID
     Logos,
     Centaurea,
     Mountain,
-    Spot
+    Talulah,
+    OceanCat,
+    NearlTheRadiantKnight,
+    Rosmontis,
+    FrostNova,
+    Spot,
 }
