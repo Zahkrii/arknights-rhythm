@@ -15,7 +15,7 @@ public class SaveFile
 [Serializable]
 public class Opreator
 {
-    public short id; //干员ID
+    public OpreatorID id; //干员ID
     public short skinIndex = 0; //干员皮肤Index，从0开始
 }
 
@@ -118,10 +118,9 @@ public static class SaveManager
         //初始化干员
         newSave.opreators = new List<Opreator>
         {
-            new Opreator { id = (short) OpreatorID.Amiya },
-            new Opreator { id = (short) OpreatorID.Logos },
-            new Opreator { id = (short) OpreatorID.Centaurea },
-            new Opreator { id = (short) OpreatorID.Mountain }
+            new Opreator { id = OpreatorID.Amiya },
+            new Opreator { id = OpreatorID.Logos },
+            new Opreator { id = OpreatorID.Mountain }
         };
         //保存
         SaveToFile(newSave, FILENAME);

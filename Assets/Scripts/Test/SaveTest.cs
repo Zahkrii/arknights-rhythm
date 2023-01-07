@@ -107,9 +107,9 @@ public class SaveTest : MonoBehaviour
         //关于已获得干员数据读取，与添加干员
         SaveManager.Open();
         //查找是否已有某个干员
-        SaveManager.PlayerSave.opreators.Exists(item => item.id == (short)OpreatorID.Amiya);
+        SaveManager.PlayerSave.opreators.Exists(item => item.id == OpreatorID.Amiya);
         //添加新获得干员
-        SaveManager.PlayerSave.opreators.Add(new Opreator { id = (short)OpreatorID.Spot });
+        // SaveManager.PlayerSave.opreators.Add(new Opreator { id = OpreatorID.Spot });
         //获取特定一个干员数据
         //SaveManager.PlayerSave.opreators[(short)OpreatorID.Amiya]
         //获取特定一个干员的皮肤索引，约定皮肤索引从0开始，一个索引对应一套皮肤

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f577708df31444546841e1f43c27f2f3, type: 3}
+  m_Name: "\u963F\u7C73\u5A05"
+  m_EditorClassIdentifier: 
+  characterName_cn: "\u963F\u7C73\u5A05"
+  characterName_py: amiya
+  characterSprite_unlock: {fileID: 21300000, guid: 45c772edde3d3d2489afc838b0ecabaa, type: 3}
+  characterSprite_lock: {fileID: 0}
+  characterSprite: {fileID: 0}
+  character_Star: 5

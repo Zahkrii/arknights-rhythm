@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f577708df31444546841e1f43c27f2f3, type: 3}
+  m_Name: "\u8000\u9A91\u58EB\u4E34\u5149"
+  m_EditorClassIdentifier: 
+  characterName_cn: "\u8000\u9A91\u58EB\u4E34\u5149"
+  characterName_py: yaoqishi
+  character_id: 6
+  characterSprite_unlock: {fileID: 21300000, guid: e555fb4d553f8a049bdb4edd7d5bdc18, type: 3}
+  characterSprite_lock: {fileID: 21300000, guid: 0402cb111dd129e44958f1d48d6a7e5d, type: 3}
+  characterSprite: {fileID: 0}
+  character_Star: 6
