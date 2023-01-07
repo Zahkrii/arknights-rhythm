@@ -93,11 +93,11 @@ public class TouchInput : MonoBehaviour
         //Hold≈–∂®
         for (int i = 0; i < ChartManager.Instance.holdingPaddingList.Count; i++)
         {
-            for (int n = 0; n < tapPosXInfos.Count; n++)
+            for (int n = 0; n < touchPosXInfos.Count; n++)
             {
-                if (ChartManager.Instance.holdingPaddingList[i].HoldingPadding(tapPosXInfos[n]))
+                if (ChartManager.Instance.holdingPaddingList[i].HoldingPadding(touchPosXInfos[n]))
                 {
-                    tapPosXInfos.RemoveAt(n);
+                    touchPosXInfos.RemoveAt(n);
                 }
             }
         }

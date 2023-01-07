@@ -1,8 +1,7 @@
-ï»¿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 public class ChartOrigin
@@ -36,43 +35,65 @@ public class LinkNoteOrigin
     public int id;
 }
 
-public class ChartTool : Editor
+public class ChartConvertor : MonoBehaviour
 {
-    [MenuItem("Tools/ConvertChart")]
     public static void ConvertChart()
     {
         string[] filePaths = Directory.GetFiles($"{Application.dataPath}/Charts/origin", "*.json", SearchOption.AllDirectories);
         for (int j = 0; j < filePaths.Length; j++)
         {
-            var filename = filePaths[j].Substring(filePaths[j].LastIndexOf('\\') + 1).Split('.');
-
-            Debug.Log($"-- å¼€å§‹è½¬æ¢ç¬¬ {j + 1} å¼ è°±é¢ --");
-            Debug.Log($"[1/4] è°±é¢ä¿¡æ¯ï¼š{filename[0]}.{filename[1]}");
+            Debug.Log($"-- ¿ªÊ¼×ª»»µÚ {j + 1} ÕÅÆ×Ãæ --");
 
             var json = File.ReadAllText(filePaths[j]);
             var data = JsonUtility.FromJson<ChartOrigin>(json);
 
-            //è½¬æ¢ Drag
-            for (int i = 0; i < data.links.Count; i++) //å¾ªç¯è¯»å–links
+            //×ª»» Drag
+            for (int i = 0; i < data.links.Count; i++) //Ñ­»·¶ÁÈ¡links
             {
-                for (int k = 0; k < data.links[i].notes.Count; k++)//è¯»å–å…¶ä¸­ä¸€ä¸ªlinkï¼Œå¾ªç¯è¯»å–å…¶ä¸­çš„notes
+                for (int k = 0; k < data.links[i].notes.Count; k++)//¶ÁÈ¡ÆäÖĞÒ»¸ölink£¬Ñ­»·¶ÁÈ¡ÆäÖĞµÄnotes
                 {
+                    //for (int k = 0; k < data.notes.Count; k++)
+                    //{
+                    //    if (data.notes[k].id == linknote.id)//id ÏàµÈ±íÃ÷Îª Drag
+                    //    {
+                    //        data.notes[k].type = 1;
+                    //    }
+                    //}
                     data.notes.Find(item => item.id == data.links[i].notes[k].id).type = 1;
                 }
+                Debug.Log($"[1/4] ×ª»» Drag ½ø¶È£º{i / data.links.Count}%");
             }
-            Debug.Log("[2/4] è½¬æ¢ Drag æˆåŠŸ");
+            Debug.Log("[1/4] ×ª»» Drag ³É¹¦");
 
-            //è½¬æ¢ Hold
+            //×ª»» Hold
+            //for (int k = 0; k < data.notes.Count; k++)
+            //{
+            //    if (Mathf.Abs(data.notes[k].size - 1.5f) < Mathf.Epsilon)//hold¿ªÊ¼
+            //    {
+            //        data.notes[k].type = 2;
+            //        holdStartIndex = k;
+            //        continue;
+            //    }
+            //    if (Mathf.Abs(data.notes[k].size - 0.5f) < Mathf.Epsilon)//hold½áÊø
+            //    {
+            //        if (holdStartIndex >= 0)
+            //        {
+            //            data.notes[holdStartIndex]._time = data.notes[k].time - data.notes[holdStartIndex].time;
+            //            data.notes.RemoveAt(k);
+            //        }
+            //        holdStartIndex = -1;
+            //        k--;
+            //    }
+            //}
             var holdStartList = data.notes.FindAll(item => Mathf.Abs(item.size - 1.5f) < Mathf.Epsilon);
             var holdEndList = data.notes.FindAll(item => Mathf.Abs(item.size - 0.5f) < Mathf.Epsilon);
             for (int i = 0; i < holdStartList.Count; i++)
             {
                 data.notes.Find(item => item.id == holdStartList[i].id)._time = holdEndList[i].time - holdStartList[i].time;
-                data.notes.Remove(data.notes.Find(item => item.id == holdEndList[i].id));
             }
-            Debug.Log("[3/4] è½¬æ¢ Hold æˆåŠŸ");
+            Debug.Log("[2/4] ×ª»» Hold ³É¹¦");
 
-            //å»é™¤å¤šä½™æ•°æ®
+            //È¥³ı¶àÓàÊı¾İ
             //for (int k = 0; k < data.notes.Count; k++)
             //{
             //    if (data.notes[k].type != 2)
@@ -86,10 +107,10 @@ public class ChartTool : Editor
                 data.notes.Find(item => item.id == tmpList[i].id)._time = 0;
             }
 
-            Debug.Log("[4/4] å†—ä½™æ•°æ®å»é™¤");
+            Debug.Log("[3/4] ÈßÓàÊı¾İÈ¥³ı");
 
             Chart newChart = new Chart();
-
+            var filename = filePaths[j].Substring(filePaths[j].LastIndexOf('\\') + 1).Split('.');
             newChart.name = filename[0];
             newChart.difficulty = filename[1];
             newChart.level = short.Parse(filename[2]);
@@ -105,11 +126,12 @@ public class ChartTool : Editor
                     holdTime = e._time
                 };
             }));
-            //è½¬æ¢å®Œæˆï¼Œå‡†å¤‡ä¿å­˜
+            //×ª»»Íê³É£¬×¼±¸±£´æ
+            Debug.Log("[4/4] ×ª»»Íê³É£¬×¼±¸±£´æ");
             var newJson = JsonUtility.ToJson(newChart);
             File.WriteAllText($"{Application.streamingAssetsPath}/Charts/{filename[0]}.{filename[1]}.json", newJson);
 
-            Debug.Log("-- è½¬æ¢æˆåŠŸ --");
+            Debug.Log("-- ×ª»»³É¹¦ --");
         }
     }
 }

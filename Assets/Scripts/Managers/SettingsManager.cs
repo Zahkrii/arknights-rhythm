@@ -1,12 +1,12 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// È«¾ÖÉèÖÃ´æ´¢Óë¶ÁÈ¡
+/// å…¨å±€è®¾ç½®å­˜å‚¨ä¸è¯»å–
 /// </summary>
 public static class SettingsManager
 {
     /// <summary>
-    /// Æ×ÃæÁ÷ËÙ
+    /// è°±é¢æµé€Ÿ
     /// </summary>
     public static int ChartSpeed
     {
@@ -21,7 +21,7 @@ public static class SettingsManager
     }
 
     /// <summary>
-    /// Æ×ÃæÑÓÊ±
+    /// è°±é¢å»¶æ—¶
     /// </summary>
     public static int ChartDelay
     {
@@ -36,7 +36,7 @@ public static class SettingsManager
     }
 
     /// <summary>
-    /// ÒôĞ§ÒôÁ¿£¬¾¯¸æ£º²»ÒªÔÚ²»´æÔÚ AudioManager µÄ³¡¾°½øĞĞ set ²Ù×÷£¬È·±£³¡¾°ÖĞ´æÔÚ AudioManager
+    /// éŸ³æ•ˆéŸ³é‡ï¼Œè­¦å‘Šï¼šä¸è¦åœ¨ä¸å­˜åœ¨ AudioManager çš„åœºæ™¯è¿›è¡Œ set æ“ä½œï¼Œç¡®ä¿åœºæ™¯ä¸­å­˜åœ¨ AudioManager
     /// </summary>
     public static float SFXVolume
     {
@@ -55,7 +55,7 @@ public static class SettingsManager
     }
 
     /// <summary>
-    /// ÒôÀÖÒôÁ¿£¬¾¯¸æ£º²»ÒªÔÚ²»´æÔÚ AudioManager µÄ³¡¾°½øĞĞ set ²Ù×÷£¬È·±£³¡¾°ÖĞ´æÔÚ AudioManager
+    /// éŸ³ä¹éŸ³é‡ï¼Œè­¦å‘Šï¼šä¸è¦åœ¨ä¸å­˜åœ¨ AudioManager çš„åœºæ™¯è¿›è¡Œ set æ“ä½œï¼Œç¡®ä¿åœºæ™¯ä¸­å­˜åœ¨ AudioManager
     /// </summary>
     public static float MusicVolume
     {
@@ -74,22 +74,22 @@ public static class SettingsManager
     }
 
     /// <summary>
-    /// µ±Ç°Ñ¡ÔñµÄÇúÄ¿£ºÓÃÓÚ´ÓÑ¡Çú³¡¾°µ½Æ×Ãæ³¡¾°´«²Î
+    /// å½“å‰é€‰æ‹©çš„æ›²ç›®ï¼šç”¨äºä»é€‰æ›²åœºæ™¯åˆ°è°±é¢åœºæ™¯ä¼ å‚
     /// </summary>
-    public static string ChartSelected
+    public static int ChartSelected
     {
         get
         {
-            return PlayerPrefs.GetString("ChartSelected");
+            return PlayerPrefs.GetInt("ChartSelected");
         }
         set
         {
-            PlayerPrefs.SetString("ChartSelected", value);
+            PlayerPrefs.SetInt("ChartSelected", value);
         }
     }
 
     /// <summary>
-    /// Æ×Ãæ´ò»÷ÒôĞ§
+    /// è°±é¢æ‰“å‡»éŸ³æ•ˆ
     /// </summary>
     public static string HitSFX
     {
@@ -104,7 +104,7 @@ public static class SettingsManager
     }
 
     /// <summary>
-    /// Æ×Ãæ´ò»÷ÒôĞ§ÒôÁ¿£¬¾¯¸æ£º²»ÒªÔÚ²»´æÔÚ AudioManager µÄ³¡¾°½øĞĞ set ²Ù×÷£¬È·±£³¡¾°ÖĞ´æÔÚ AudioManager
+    /// è°±é¢æ‰“å‡»éŸ³æ•ˆéŸ³é‡ï¼Œè­¦å‘Šï¼šä¸è¦åœ¨ä¸å­˜åœ¨ AudioManager çš„åœºæ™¯è¿›è¡Œ set æ“ä½œï¼Œç¡®ä¿åœºæ™¯ä¸­å­˜åœ¨ AudioManager
     /// </summary>
     public static float HitSFXVolume
     {
