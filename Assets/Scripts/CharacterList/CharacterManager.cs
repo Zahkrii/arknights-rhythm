@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.IO;
+using UnityEngine.UI;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class CharacterManager : MonoBehaviour
     [Header("角色列表 UI")]
     public GameObject listParent;
     private GameObject[] list;
+
+    [Header("角色详情面板")]
+    public GameObject characterDetail;
 
     // Start is called before the first frame update
     void Start()
@@ -44,16 +48,16 @@ public class CharacterManager : MonoBehaviour
             // 初始标记为未解锁
             characterList[characterSOList[i]] = false;
 
-            // // 后期修改,测试用
-            // if (characterSOList[i].characterName_cn == "阿米娅" ||
-            // characterSOList[i].characterName_cn == "Logos" ||
-            // characterSOList[i].characterName_cn == "矢车菊" ||
-            // characterSOList[i].characterName_cn == "山")
-            // {
-            //     // 标记为已解锁
-            //     characterList[characterSOList[i]] = true;
-            // }
-            characterList[characterSOList[i]] = SaveManager.PlayerSave.opreators.Exists(item => item.id == characterSOList[i].character_id);
+            // 后期修改,测试用
+            if (characterSOList[i].characterName_cn == "阿米娅" ||
+            characterSOList[i].characterName_cn == "Logos" ||
+            characterSOList[i].characterName_cn == "矢车菊" ||
+            characterSOList[i].characterName_cn == "山")
+            {
+                // 标记为已解锁
+                characterList[characterSOList[i]] = true;
+            }
+            //characterList[characterSOList[i]] = SaveManager.PlayerSave.opreators.Exists(item => item.id == characterSOList[i].character_id);
         }
 
         return characterList;
@@ -172,6 +176,9 @@ public class CharacterManager : MonoBehaviour
             list[i].SetActive(true);
             // 设置单元格属性
             list[i].GetComponent<CharacterCell>().SetCharacterData(characterListSorted.ElementAt(i).Key, characterListSorted.ElementAt(i).Value);
+            // 增加干员单元格监听事件
+            list[i].GetComponent<Button>().onClick.AddListener(() => characterDetail.SetActive(true));
+            list[i].GetComponent<Button>().onClick.AddListener(list[i].GetComponent<CharacterCell>().OnClick);
         }
     }
 }
