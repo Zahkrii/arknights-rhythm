@@ -26,7 +26,7 @@ public class Data : MonoBehaviour
     {
         Score[level,num] = 950000 > Score[level,num] ? 950000 : Score[level,num];
     }
-    public void Excellent()//Í»Ï®
+    public void Excellent()//ËÄÐÇ
     {
         Score[level,num] = 1000000 > Score[level, num] ? 1000000 : Score[level, num];
     }
