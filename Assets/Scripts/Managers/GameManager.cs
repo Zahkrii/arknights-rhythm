@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameStart()
     {
         yield return new WaitForSeconds(3);
-        ScoreManager.Instance.TotalNotes = data.notes.Count;
+        ScoreManager.Instance.Init(data.id, data.difficulty, data.level, data.count);
         isGameStart = true;
         AudioManager.Instance.PlayChartMusic("SE4");
     }

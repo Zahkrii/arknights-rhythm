@@ -7,8 +7,9 @@ using UnityEngine.Networking;
 
 public class Chart
 {
+    public ChartID id;
     public string name;
-    public string difficulty;
+    public Difficulty difficulty;
     public short level;
     public int count;
     public List<Note> notes;

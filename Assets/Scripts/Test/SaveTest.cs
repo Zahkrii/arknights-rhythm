@@ -97,11 +97,11 @@ public class SaveTest : MonoBehaviour
         //因为 ChartID 与 chartScores 的 index 刚好对应，所以可以直接通过 (int)ChartID.L1_1 索引查找关卡 1-1 对应的曲目分数
         SaveManager.Open();
         //设置分数
-        //Tip：可以通过此方法来设置分数到关卡解锁的条件，然后再读取分数看关卡是否满足解锁条件，来解锁关卡，以进行测试
-        SaveManager.PlayerSave.chartScores[(int)ChartID.L1_5].SetScore(Difficulty.Easy, paddingScore: 850000, comboScore: 50000);
+        //Tip：可以通过此方法来设置分数到关卡解锁的条件，然后再读取分数看关卡是否满足解锁条件，来解锁关卡，以进行测试，正式版本不应该在除ScoreManager以外的场景使用
+        SaveManager.PlayerSave.chartScores[(int)ChartID.L1_5].SetScore(Difficulty.Easy, padding: 850000, combo: 50000, ranks: 0);
         //读取分数
-        int paddingScore = SaveManager.PlayerSave.chartScores[(int)ChartID.L1_5].paddingScoreEZ;
-        Debug.Log($" - 关卡1-1 简单难度 - \n判定分：{paddingScore}\n连击分：{SaveManager.PlayerSave.chartScores[(int)ChartID.L1_5].comboScoreEZ}");
+        int paddingScore = SaveManager.PlayerSave.chartScores[(int)ChartID.L1_5].scoreEZ.padding;
+        Debug.Log($" - 关卡1-1 简单难度 - \n判定分：{paddingScore}\n连击分：{SaveManager.PlayerSave.chartScores[(int)ChartID.L1_5].scoreEZ.combo}");
         SaveManager.Close();
 
         //关于已获得干员数据读取，与添加干员
@@ -123,5 +123,6 @@ public class SaveTest : MonoBehaviour
 
         //最后
         //存档使用了序列化成JSON字符串保存的形式，因为JSON本身的特性，有较多重复字符占用空间，于是又使用了Gzip对字符串进行压缩
+        //存档保存路径位于用户文件夹 AppData\LocalLow\Cookie Game Bakery\Arknights Rhythm 下
     }
 }
