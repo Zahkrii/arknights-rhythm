@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class NameOperatornumShowing : MonoBehaviour
+public class NameOperatornumLevelShowing : MonoBehaviour
 {
     public TextMeshProUGUI NameID;
     public TextMeshProUGUI UnlockOperatorNum;
     private int UnlockOperatorsNum;
+    public TextMeshProUGUI Level;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,8 @@ public class NameOperatornumShowing : MonoBehaviour
             }
             if (UnlockOperatorNum != null) UnlockOperatorNum.GetComponent<TextMeshProUGUI>().text = "干员解锁数量:\t"+UnlockOperatorsNum+"/9";
             UnlockOperatorsNum = 0;
-
+            //等级读取
+            Level.GetComponent<TextMeshProUGUI>().text = "博士等级:\t\t" + SaveManager.PlayerSave.level + "/120";
             SaveManager.Close();
             //Debug.Log("已关闭存档文件");
         }

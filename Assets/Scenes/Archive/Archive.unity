@@ -1407,6 +1407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameID: {fileID: 456507068}
   UnlockOperatorNum: {fileID: 1886962710}
+  Level: {fileID: 144383430}
 --- !u!114 &1577746388
 MonoBehaviour:
   m_ObjectHideFlags: 0
