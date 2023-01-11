@@ -91,7 +91,7 @@ public class ChartTool : Editor
             Chart newChart = new Chart();
 
             newChart.name = filename[0];
-            newChart.difficulty = filename[1];
+            newChart.difficulty = (Difficulty)int.Parse(filename[1]);
             newChart.level = short.Parse(filename[2]);
             newChart.count = data.notes.Count;
             newChart.notes = new List<Note>(data.notes.ConvertAll(e =>

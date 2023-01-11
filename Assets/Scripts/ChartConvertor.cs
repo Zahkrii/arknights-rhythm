@@ -112,7 +112,7 @@ public class ChartConvertor : MonoBehaviour
             Chart newChart = new Chart();
             var filename = filePaths[j].Substring(filePaths[j].LastIndexOf('\\') + 1).Split('.');
             newChart.name = filename[0];
-            newChart.difficulty = filename[1];
+            newChart.difficulty = (Difficulty)int.Parse(filename[1]);
             newChart.level = short.Parse(filename[2]);
             newChart.count = data.notes.Count;
             newChart.notes = new List<Note>(data.notes.ConvertAll(e =>
@@ -129,7 +129,7 @@ public class ChartConvertor : MonoBehaviour
             //转换完成，准备保存
             Debug.Log("[4/4] 转换完成，准备保存");
             var newJson = JsonUtility.ToJson(newChart);
-            File.WriteAllText($"{Application.streamingAssetsPath}/Charts/{filename[0]}.{filename[1]}.json", newJson);
+            File.WriteAllText($"{Application.streamingAssetsPath}/Charts/{filename[0]}.{filename[0]}.{filename[2]}.json", newJson);
 
             Debug.Log("-- 转换成功 --");
         }

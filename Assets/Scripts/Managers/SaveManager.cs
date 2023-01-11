@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
 public class SaveFile
 {
     public string playerID; //玩家ID
+    public float level = 0; //技术等级
     public List<ChartScore> chartScores; //分数列表
     public List<Opreator> opreators; //已解锁/获得的干员列表
 }
@@ -25,24 +27,16 @@ public class ChartScore
     public short id; //曲目ID
 
     //简单难度（Easy）
-    public int paddingScoreEZ = 0; //判定分，满分90万
-
-    public int comboScoreEZ = 0; //连击分，满分10万
+    public Score scoreEZ;
 
     //普通难度（Normal）
-    public int paddingScoreNM = 0; //判定分，满分90万
-
-    public int comboScoreNM = 0; //连击分，满分10万
+    public Score scoreNM;
 
     //困难难度（Hard）
-    public int paddingScoreHD = 0; //判定分，满分90万
+    public Score scoreHD;
 
-    public int comboScoreHD = 0; //连击分，满分10万
-
-    //超难难度（Insane）
-    public int paddingScoreIN = 0; //判定分，满分90万
-
-    public int comboScoreIN = 0; //连击分，满分10万
+    //额外难度（Extra）
+    public Score scoreEX;
 
     //FC：全连，连击分满分
     //AP：All Perfect，判定分加连击分达到100万
@@ -53,38 +47,55 @@ public class ChartScore
     /// <param name="difficulty">曲目难度</param>
     /// <param name="paddingScore">判定分 [0,900000]</param>
     /// <param name="comboScore">连击分 [0,100000]</param>
-    public void SetScore(Difficulty difficulty, int paddingScore, int comboScore)
+    public void SetScore(Difficulty difficulty, float padding, float combo, float ranks)
     {
-        paddingScore = Mathf.Clamp(paddingScore, 0, 900000);
-        comboScore = Mathf.Clamp(comboScore, 0, 100000);
+        int paddingScore = Mathf.CeilToInt(Mathf.Clamp(padding, 0, 900000));
+        int comboScore = Mathf.CeilToInt(Mathf.Clamp(combo, 0, 100000));
         switch (difficulty)
         {
             case Difficulty.Easy:
                 {
-                    paddingScoreEZ = paddingScore;
-                    comboScoreEZ = comboScore;
+                    scoreEZ.padding = paddingScore;
+                    scoreEZ.combo = comboScore;
+                    scoreEZ.ranks = ranks;
                     break;
                 }
             case Difficulty.Normal:
                 {
-                    paddingScoreNM = paddingScore;
-                    comboScoreNM = comboScore;
+                    scoreNM.padding = paddingScore;
+                    scoreNM.combo = comboScore;
+                    scoreNM.ranks = ranks;
                     break;
                 }
             case Difficulty.Hard:
                 {
-                    paddingScoreHD = paddingScore;
-                    comboScoreHD = comboScore;
+                    scoreHD.padding = paddingScore;
+                    scoreHD.combo = comboScore;
+                    scoreHD.ranks = ranks;
                     break;
                 }
             case Difficulty.Insane:
                 {
-                    paddingScoreIN = paddingScore;
-                    comboScoreIN = comboScore;
+                    scoreEX.padding = paddingScore;
+                    scoreEX.combo = comboScore;
+                    scoreEX.ranks = ranks;
                     break;
                 }
         }
     }
+}
+
+[Serializable]
+public class Score
+{
+    //判定分数，满分90万
+    public int padding = 0;
+
+    //连击分数，满分10万
+    public int combo = 0;
+
+    //perfect计数
+    public float ranks = 0;
 }
 
 public static class SaveManager
