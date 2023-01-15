@@ -32,11 +32,11 @@ public class SliderController : MonoBehaviour
         SpeedText.GetComponent<TextMeshProUGUI>().text = ""+SettingsManager.ChartSpeed;//数值显示
 
         SettingsManager.SFXVolume = SFXSlider.value;//音效音量变量传递
-        string ssf = string.Format("{0:f2}", SettingsManager.SFXVolume);//float变量小数位固定为后两位
+        string ssf = string.Format("{0:f0}", SettingsManager.SFXVolume*100);//float变量小数位固定为后两位
         SFXText.GetComponent<TextMeshProUGUI>().text = ssf;//数值显示
 
         SettingsManager.MusicVolume = VoiceSlider.value;//音乐音量变量传递
-        string sm = string.Format("{0:f2}", SettingsManager.MusicVolume);//float变量小数位固定为后两位
+        string sm = string.Format("{0:f0}", SettingsManager.MusicVolume*100);//float变量小数位固定为后两位
         VoiceText.GetComponent<TextMeshProUGUI>().text = sm;//数值显示
     }
 }

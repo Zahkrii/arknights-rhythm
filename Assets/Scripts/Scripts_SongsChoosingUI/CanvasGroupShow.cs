@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasGroupShow : MonoBehaviour
 {
@@ -13,9 +14,10 @@ public class CanvasGroupShow : MonoBehaviour
         //StartCoroutine(CloseTask());
     }
 
-    public void showUi()//打开函数
+    public void showUi(int num)//打开函数
     {
-       // Debug.Log("loading。。。");
+        // Debug.Log("loading。。。");
+        ex.alpha = 0;
         StartCoroutine(ShowTask());
     }
 
