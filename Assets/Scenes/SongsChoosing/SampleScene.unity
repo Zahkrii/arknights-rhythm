@@ -442,6 +442,18 @@ PrefabInstance:
       propertyPath: num
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: CurUI
+      value: 
+      objectReference: {fileID: 1880615569}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: NexUI
+      value: 
+      objectReference: {fileID: 1657596770}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: PreUI
+      value: 
+      objectReference: {fileID: 2135196717}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
 --- !u!224 &102151948 stripped
@@ -861,6 +873,18 @@ PrefabInstance:
       propertyPath: num
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: CurUI
+      value: 
+      objectReference: {fileID: 966961160}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: NexUI
+      value: 
+      objectReference: {fileID: 1568929263}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: PreUI
+      value: 
+      objectReference: {fileID: 1511623367}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
 --- !u!224 &253907270 stripped
@@ -1957,6 +1981,14 @@ PrefabInstance:
       propertyPath: num
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: CurUI
+      value: 
+      objectReference: {fileID: 1568929263}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: PreUI
+      value: 
+      objectReference: {fileID: 966961160}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
 --- !u!224 &562029187 stripped
@@ -5016,6 +5048,18 @@ PrefabInstance:
       propertyPath: num
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: CurUI
+      value: 
+      objectReference: {fileID: 1657596770}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: NexUI
+      value: 
+      objectReference: {fileID: 1511623367}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: PreUI
+      value: 
+      objectReference: {fileID: 1880615569}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
 --- !u!224 &1478702464 stripped
@@ -7800,6 +7844,18 @@ PrefabInstance:
       propertyPath: num
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: CurUI
+      value: 
+      objectReference: {fileID: 1511623367}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: NexUI
+      value: 
+      objectReference: {fileID: 966961160}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: PreUI
+      value: 
+      objectReference: {fileID: 1657596770}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
 --- !u!224 &2023591680 stripped
@@ -8704,6 +8760,22 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 643835769737049393, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 643835769737049393, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 643835769737049393, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 643835769737049393, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: QuickShift, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1009154277885072870, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -9136,6 +9208,14 @@ PrefabInstance:
       propertyPath: m_isRightToLeft
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: CurUI
+      value: 
+      objectReference: {fileID: 2135196717}
+    - target: {fileID: 8532262983313190911, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
+      propertyPath: NexUI
+      value: 
+      objectReference: {fileID: 1880615569}
     - target: {fileID: 8816891197881119305, guid: 6cb995d101ac39c49bb565650c095722, type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
       value: 0.9528302

@@ -45,9 +45,13 @@ public class ButtonManager : Data
             { 
                 Buttons[i].RealCurrentButton.onClick.AddListener(() => { isCurBtnClicked(temp); });//监听触发关卡具体参数UI的按钮
                 Buttons[i].EndButton.onClick.AddListener(() => { isEnd(temp); }); //监听事件结束按钮
+                Buttons[i].LeftArray.onClick.AddListener(() => { isCurLeftArrayClicked(temp); });//给左箭头添加事件
+                Buttons[i].RightArray.onClick.AddListener(() => { isCurRightArrayClicked(temp); });//给右箭头添加事件
+                if (i == 0 || i == 6 && Buttons[i] != null) Buttons[i].LeftArray.GetComponent<Button>().interactable = false;//1-1、SE-1左箭头无效化        
+                if (i == 5 || i == 10 && Buttons[i] != null) Buttons[i].RightArray.GetComponent<Button>().interactable = false;//1-6、SE-5右箭头无效化
+                boolArray(i);
             }
         }
-
     }
 
     void isCurBtnClicked(int num)//这里传入的num就是i
@@ -55,34 +59,30 @@ public class ButtonManager : Data
         Debug.Log("UIopen");
         Buttons[num].SpeficChoicesUI.SetActive(true);//打开具体参数
         Buttons[num].SpeficChoicesUI.GetComponent<CanvasGroupShow>().showUi(num);
-
-        int temp2 = num;
-        boolArray(num); //判断右箭头是否有效
-        Buttons[num].LeftArray.onClick.AddListener(() => { isCurLeftArrayClicked(temp2); });//给左箭头添加事件
-        Buttons[num].RightArray.onClick.AddListener(() => { isCurRightArrayClicked(temp2); });//给右箭头添加事件
         AudioManager.Instance.PlayMusic((num).ToString());//播放音乐
     }
 
     void isCurLeftArrayClicked(int number)//左箭头按下切换SpecificUI函数
     {
-        isEnd(number);
-        number--;
-        isCurBtnClicked(number);
-        //Debug.Log("第" + number + "关左箭头按下");
+        AudioManager.Instance.StopMusic();
+        Buttons[number].SpeficChoicesUI.SetActive(false);
+        Buttons[number - 1].SpeficChoicesUI.SetActive(true);
+        Buttons[number - 1].SpeficChoicesUI.GetComponent<CanvasGroupShow>().showUi(number - 1);
+        AudioManager.Instance.PlayMusic((number-1).ToString());//播放音乐
+        Debug.Log("第" + number + "关左箭头按下");
     }
     void isCurRightArrayClicked(int number)//右箭头按下切换SpecificUI函数
     {
-        isEnd(number);
-        number++;
-        isCurBtnClicked(number);
-        //Debug.Log("第" + number + "关右箭头按下");
+        AudioManager.Instance.StopMusic();
+        Buttons[number].SpeficChoicesUI.SetActive(false);
+        Buttons[number + 1].SpeficChoicesUI.SetActive(true);
+        Buttons[number + 1].SpeficChoicesUI.GetComponent<CanvasGroupShow>().showUi(number + 1);
+        AudioManager.Instance.PlayMusic((number+1).ToString());//播放音乐
+        Debug.Log("第" + number + "关右箭头按下");
     }
+
     void boolArray(int number)//判断右箭头是否有效函数
     {
-        //Buttons[number].RightArray.GetComponent<Button>().interactable = false;
-        //Buttons[number].LeftArray.GetComponent<Button>().interactable = false;
-
-        Debug.Log("等一会儿");
         if ((Buttons[number+1].SpeficChoicesUI != null) && Score[0, number] <= 10000 && Score[1, number] <= 10000 && Score[2, number] <= 10000 )
         {
             Buttons[number].RightArray.GetComponent<Button>().interactable = false;
@@ -98,19 +98,16 @@ public class ButtonManager : Data
             Buttons[number].RightArray.GetComponent<Button>().interactable = true;
             //Debug.Log("右箭头检测恢复效用");
         }
-        if (number == 0 || number == 6 && Buttons[number] != null) Buttons[number].LeftArray.GetComponent<Button>().interactable = false;//1-1、SE-1左箭头无效化        
-        if (number == 5 || number == 10 && Buttons[number] != null) Buttons[number].RightArray.GetComponent<Button>().interactable = false;//1-6、SE-5右箭头无效化
         //Debug.Log("检测完成"+number);
     }
 
     void isEnd(int num)
     {
-        Debug.Log("UIclose");
+        //Debug.Log("UIclose");
         AudioManager.Instance.StopMusic();
-        Debug.Log("MUSIC CLOSED");
-        Buttons[num].SpeficChoicesUI.GetComponent<CanvasGroupShow>().closeUI();
+        //Debug.Log("MUSIC CLOSED");
+        //Buttons[num].SpeficChoicesUI.GetComponent<CanvasGroupShow>().closeUI();
         //StartCoroutine(EndTask());//等待淡出画面
         Buttons[num].SpeficChoicesUI.SetActive(false);
-
     }
 }
