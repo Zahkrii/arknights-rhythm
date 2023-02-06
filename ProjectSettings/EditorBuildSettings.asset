@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SongsChoosing/EP-1.unity
     guid: fc8467c6896606242833c4eeddb97ac5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SongsChoosing/Home.unity
     guid: a03acd9fe88355d46aecb36a96fab1e9
   - enabled: 1
@@ -155,4 +155,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SongsChoosing/SE-5/PlayingSE-5-H.unity
     guid: 3316054be0a986640ad387c0727838bd
+  - enabled: 1
+    path: Assets/Scenes/Home/HOME.unity
+    guid: 1c3f0d7dcfb2fac4aa7e83432464b47f
   m_configObjects: {}
