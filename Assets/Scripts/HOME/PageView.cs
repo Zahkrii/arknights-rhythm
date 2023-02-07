@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using DG.Tweening;
 
 /// <summary>
 /// 滑动页面效果
 /// </summary>
-public class PageView : MonoBehaviour, IBeginDragHandler, IEndDragHandler
+public class PageView : MonoBehaviour , IBeginDragHandler, IEndDragHandler
 {
     private ScrollRect rect;//ScrollRect组件
     private float targethorizontal = 0;
@@ -17,8 +18,38 @@ public class PageView : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     private float startTime = 0;
     private float startDragHorizontal;
     private int curIndex = 0;
-
     public float speed = 3;//滑动速度  
+
+    public Arrayanimation Array;//实例化箭头对象
+
+     void OnUpdateAnimation(int index)//拖动结束时的切换事件
+     {
+        //在下面加动画变换函数或者在别的脚本里检测位置变换
+        releasearray();//箭头复位
+        //信息板更换
+        //号标更换
+     }
+    void EndUpdateAnimation(int index)//拖动开始时的事件
+    {
+        //在下面加动画变换函数或者在别的脚本里检测位置变换
+        hidearray();//箭头消失           
+    }
+
+    void releasearray()//箭头复位函数
+    {
+        //箭头出现
+        Array.leftarray.SetActive(true);
+        Array.rightarray.SetActive(true);
+        //重新播放动画
+        Array.leftsequence.Restart();
+        Array.rightsequence.Restart();
+        Debug.Log("动画重置");
+    }
+    void hidearray()//拖动时隐藏箭头函数
+    {
+        Array.leftarray.SetActive(false);
+        Array.rightarray.SetActive(false);
+    }
 
 
     void Start()
@@ -32,7 +63,6 @@ public class PageView : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
         curIndex = 0;//当前页面索引是0
     }
-
     void Update()
     {
         if (!isDrag)
@@ -43,19 +73,21 @@ public class PageView : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             rect.horizontalNormalizedPosition = Mathf.Lerp(rect.horizontalNormalizedPosition, targethorizontal, t);//插值函数
             //缓慢匀速滑动效果
             //rect.horizontalNormalizedPosition = Mathf.Lerp(rect.horizontalNormalizedPosition, targethorizontal, Time.deltaTime * speed);
-            Debug.Log("拖动结束");
-
-            //在下面加动画变换函数或者在别的脚本里检测位置变换？
+            Debug.Log("拖动结束");          
         }
     }
+
 
     public void OnBeginDrag(PointerEventData eventData)//开始拖动
     {
         isDrag = true;
         startDragHorizontal = rect.horizontalNormalizedPosition;  //horizontalNormalizedPosition这个参数是scrollRect滑动期间变化的x坐标值，在（0， 1）之间
+
+        //根据UI切换控制动画变换事件函数
+        EndUpdateAnimation(curIndex);
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)//结束拖动
     {
         //Debug.Log("OnEndDrag");
         float posX = rect.horizontalNormalizedPosition;
@@ -74,6 +106,9 @@ public class PageView : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         targethorizontal = posList[curIndex]; //设置当前坐标，更新函数进行插值  
         isDrag = false;
         startTime = 0;
+
+        //根据UI切换控制动画变换事件函数
+        OnUpdateAnimation(curIndex);
     }
 }
 
