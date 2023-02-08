@@ -26,13 +26,14 @@ public class PageView : MonoBehaviour , IBeginDragHandler, IEndDragHandler
      {
         //在下面加动画变换函数或者在别的脚本里检测位置变换
         releasearray();//箭头复位
-        //信息板更换
+        Array.ChInfoSwitch(index);//信息板更换
         //号标更换
      }
     void EndUpdateAnimation(int index)//拖动开始时的事件
     {
         //在下面加动画变换函数或者在别的脚本里检测位置变换
-        hidearray();//箭头消失           
+        hidearray();//箭头消失
+        
     }
 
     void releasearray()//箭头复位函数
