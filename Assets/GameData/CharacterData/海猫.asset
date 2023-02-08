@@ -17,5 +17,25 @@ MonoBehaviour:
   character_id: 5
   characterSprite_unlock: {fileID: 21300000, guid: 7041efc1dfb6b6045a7538995e9cf325, type: 3}
   characterSprite_lock: {fileID: 21300000, guid: 4854442199de3e742bb3f4d66577d121, type: 3}
-  characterSprite: {fileID: 0}
+  characterSprite: {fileID: 21300000, guid: 8ae5a7b5b33175f47b9827eb5bbbd82f, type: 3}
+  characterNameSprite: {fileID: 21300000, guid: 069f85f4997621c4bbbeb59fe2d4c2b5, type: 3}
+  characterAudios:
+    list:
+    - Key: 0
+      Value: "\u535A\u58EB\u4F60\u597D\u554A\uFF0C\u6765\u5C1D\u5C1D\u4E1C\u65B9\u9985\u6302\u7092\u996D\u5427\u3002"
+    - Key: 1
+      Value: "\u6211\u662F\u4E00\u4E2A\u539F\u5219\u6027\u5F88\u5F3A\u7684\u4EBA\uFF0C\u5982\u679C\u6709\u4EC0\u4E48\u9700\u8981\u5E2E\u52A9\u7684\u53EF\u4EE5\u6084\u6084\u544A\u8BC9\u6211\u3002"
+    - Key: 2
+      Value: "\u60F3\u8BA9\u6211\u5531\u9996\u6B4C\uFF1F\u5148\u8BF4\u597D\uFF0C\u9664\u4E86\u90A3\u4E00\u9996\u3002"
+    - Key: 3
+      Value: "\u8BA9\u6211\u5728\u4E0B\u6B21\u5956\u52B1\u7ED3\u7B97\u7684\u65F6\u5019\u7FFB\u500D\u4E00\u4E0B\uFF1F\u4E3A\u4EC0\u4E48\u4E0D\u76F4\u63A5All
+        in\u5462\uFF1F"
+    - Key: 4
+      Value: "\u4F60\u505A\u7684\u597D\uFF0C\u4F60\u662F\u8FD9\u7247\u5927\u5730\u7684\u65CB\u5F8B\u5929\u624D\u3002"
+    - Key: 5
+      Value: "\u7F8E\u5999\u7684\u4E50\u7AE0\uFF0C\u8003\u8651\u52A0\u5165\u585E\u58EC\u5531\u7247\u5417\uFF1F"
+    - Key: 6
+      Value: "\u4F60\u5F97\u7ED9\u52B2\u554A\uFF01"
+    - Key: 7
+      Value: "\u53EF\u6015\u5417\uFF1F\u662F\u7684\uFF0C\u5F88\u53EF\u6015"
   character_Star: 5
