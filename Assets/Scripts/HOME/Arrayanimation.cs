@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using System.Collections;
 
 public class Arrayanimation : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class Arrayanimation : MonoBehaviour
 
     //碟片
     public Image disc;
-
+    Tween twe;
     // Start is called before the first frame update
     void Awake()
     {
@@ -55,8 +56,29 @@ public class Arrayanimation : MonoBehaviour
         }
 
         //碟片旋转
-        disc.transform.DORotate(new Vector3(0, 0, 360), 2.5f, RotateMode.FastBeyond360).SetEase(Ease.InQuart).SetLoops(-1);
+        disc.transform.DORotate(new Vector3(0, 0, 360), 3f, RotateMode.FastBeyond360).SetEase(Ease.InOutCirc);
+        float timer = 0;
+        Tween t = DOTween.To(() => timer, x => timer = x, 1, 4.25f)
+                      .OnStepComplete(() =>
+                      {
+                          disc.transform.DORotate(new Vector3(0, 0, 360), 3f, RotateMode.FastBeyond360).SetEase(Ease.InOutCirc);
+                      })
+                      .SetLoops(-1);
+        //twe = disc.transform.DORotate(new Vector3(0, 0, 360), 3f, RotateMode.FastBeyond360).SetEase(Ease.InOutCirc).SetLoops(-1);
     }
+
+    /*void wait()
+    {
+        twe.Pause();
+        Debug.Log("开始");
+        for(float i = 20; i > 0; i -= Time.deltaTime)
+        {
+            Debug.Log("时停ing");
+        }
+        twe.Play();
+        Debug.Log("结束");
+    }*/
+    
 
     void back()
     {
@@ -81,6 +103,6 @@ public class Arrayanimation : MonoBehaviour
         ChapterOrder[index].GetComponent<Image>().CrossFadeAlpha(1, 0.5f, true);
     }
 
-    
 
+   
 }
