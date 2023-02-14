@@ -8,7 +8,8 @@ using UnityEngine;
 
 public class SaveFile
 {
-    public string playerID; //玩家ID
+    public int playerID; //玩家ID
+    public string playerName; //玩家名称
     public float level = 0; //技术等级
     public List<ChartScore> chartScores; //分数列表
     public List<Opreator> opreators; //已解锁/获得的干员列表
@@ -115,11 +116,11 @@ public static class SaveManager
     /// 初始化存档文件
     /// </summary>
     /// <param name="playerID">玩家ID</param>
-    public static void Init(string playerID)
+    public static void Init(string playerName)
     {
         //新建存档
         SaveFile newSave = new SaveFile();
-        newSave.playerID = playerID;
+        newSave.playerID = playerName;
         //初始化曲目
         newSave.chartScores = new List<ChartScore>();
         foreach (ChartID id in Enum.GetValues(typeof(ChartID)))
