@@ -44,3 +44,18 @@ public enum OpreatorID
     FrostNova,
     Spot,
 }
+
+/// <summary>
+/// 干员8个语音的类型
+/// </summary>
+public enum CharacterAudioType
+{
+    Login,
+    ChatFirst,
+    ChatSecond,
+    ChatThird,
+    GameFourStar,
+    GameThreeStar,
+    GameTwoStar,
+    GameOneStar,
+}
