@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class TapScript : MonoBehaviour
 {
-    private float Timer = -10f / 5;
+    private float Timer = -10f / (5 * 1);
 
     private bool add = true, remove = true;
+
+    //NoteÊý¾Ý
+    //private float size = 1;
 
     private void Update()
     {
@@ -26,7 +29,7 @@ public class TapScript : MonoBehaviour
             Miss();
         }
         //ÒÆ¶¯
-        transform.Translate(0, -(5 * 1) * Time.deltaTime, 0);
+        transform.Translate(0, -5 * Time.deltaTime, 0);
     }
 
     private void Miss()

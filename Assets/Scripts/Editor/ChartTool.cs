@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -44,56 +44,63 @@ public class ChartTool : Editor
         string[] filePaths = Directory.GetFiles($"{Application.dataPath}/Charts/origin", "*.json", SearchOption.AllDirectories);
         for (int j = 0; j < filePaths.Length; j++)
         {
-            var filename = filePaths[j].Substring(filePaths[j].LastIndexOf('\\') + 1).Split('.');
-
-            Debug.Log($"-- å¼€å§‹è½¬æ¢ç¬¬ {j + 1} å¼ è°±é¢ --");
-            Debug.Log($"[1/4] è°±é¢ä¿¡æ¯ï¼š{filename[0]}.{filename[1]}");
-
             var json = File.ReadAllText(filePaths[j]);
             var data = JsonUtility.FromJson<ChartOrigin>(json);
 
-            //è½¬æ¢ Drag
-            for (int i = 0; i < data.links.Count; i++) //å¾ªç¯è¯»å–links
+            int holdStartIndex = -1;
+
+            for (int i = 0; i < data.links.Count; i++) //Ñ­»·¶ÁÈ¡links
             {
-                for (int k = 0; k < data.links[i].notes.Count; k++)//è¯»å–å…¶ä¸­ä¸€ä¸ªlinkï¼Œå¾ªç¯è¯»å–å…¶ä¸­çš„notes
+                foreach (var linknote in data.links[i].notes)//¶ÁÈ¡ÆäÖĞÒ»¸ölink£¬Ñ­»·¶ÁÈ¡ÆäÖĞµÄnotes
                 {
-                    data.notes.Find(item => item.id == data.links[i].notes[k].id).type = 1;
+                    for (int k = 0; k < data.notes.Count; k++)
+                    {
+                        if (data.notes[k].id == linknote.id)
+                        {
+                            data.notes[k].type = 1;
+                        }
+                        if (data.notes[k].size == 1.5f)//hold¿ªÊ¼
+                        {
+                            data.notes[k].type = 2;
+                            holdStartIndex = k;
+                        }
+                        if (data.notes[k].size == 0.5f)//hold½áÊø
+                        {
+                            if (holdStartIndex >= 0)
+                            {
+                                data.notes[holdStartIndex]._time = data.notes[holdStartIndex].time - data.notes[k].time;
+                                data.notes.RemoveAt(k);
+                            }
+                            holdStartIndex = -1;
+                        }
+                    }
                 }
             }
-            Debug.Log("[2/4] è½¬æ¢ Drag æˆåŠŸ");
 
-            //è½¬æ¢ Hold
-            var holdStartList = data.notes.FindAll(item => Mathf.Abs(item.size - 1.5f) < Mathf.Epsilon);
-            var holdEndList = data.notes.FindAll(item => Mathf.Abs(item.size - 0.5f) < Mathf.Epsilon);
-            for (int i = 0; i < holdStartList.Count; i++)
+            for (int k = 0; k < data.notes.Count; k++)
             {
-                data.notes.Find(item => item.id == holdStartList[i].id)._time = holdEndList[i].time - holdStartList[i].time;
-                data.notes.Remove(data.notes.Find(item => item.id == holdEndList[i].id));
+                if (Mathf.Abs(data.notes[k].size - 1.5f) < Mathf.Epsilon)//hold¿ªÊ¼
+                {
+                    data.notes[k].type = 2;
+                    holdStartIndex = k;
+                    continue;
+                }
+                if (Mathf.Abs(data.notes[k].size - 0.5f) < Mathf.Epsilon)//hold½áÊø
+                {
+                    if (holdStartIndex >= 0)
+                    {
+                        data.notes[holdStartIndex]._time = data.notes[holdStartIndex].time - data.notes[k].time;
+                        data.notes.RemoveAt(k);
+                    }
+                    holdStartIndex = -1;
+                }
             }
-            Debug.Log("[3/4] è½¬æ¢ Hold æˆåŠŸ");
-
-            //å»é™¤å¤šä½™æ•°æ®
-            //for (int k = 0; k < data.notes.Count; k++)
-            //{
-            //    if (data.notes[k].type != 2)
-            //    {
-            //        data.notes[k]._time = 0;
-            //    }
-            //}
-            var tmpList = data.notes.FindAll(item => item.type != 2);
-            for (int i = 0; i < tmpList.Count; i++)
-            {
-                data.notes.Find(item => item.id == tmpList[i].id)._time = 0;
-            }
-
-            Debug.Log("[4/4] å†—ä½™æ•°æ®å»é™¤");
 
             Chart newChart = new Chart();
-
+            var filename = filePaths[j].Substring(filePaths[j].LastIndexOf('\\') + 1).Split('.');
             newChart.name = filename[0];
-            newChart.difficulty = (Difficulty)int.Parse(filename[1]);
+            newChart.difficulty = filename[1];
             newChart.level = short.Parse(filename[2]);
-            newChart.count = data.notes.Count;
             newChart.notes = new List<Note>(data.notes.ConvertAll(e =>
             {
                 return new Note
@@ -101,15 +108,15 @@ public class ChartTool : Editor
                     id = e.id,
                     type = e.type,
                     pos = e.pos,
+                    //size = e.size,
                     time = e.time,
                     holdTime = e._time
                 };
             }));
-            //è½¬æ¢å®Œæˆï¼Œå‡†å¤‡ä¿å­˜
+            //×ª»»Íê³É£¬×¼±¸±£´æ
             var newJson = JsonUtility.ToJson(newChart);
-            File.WriteAllText($"{Application.streamingAssetsPath}/Charts/{filename[0]}.{filename[1]}.json", newJson);
-
-            Debug.Log("-- è½¬æ¢æˆåŠŸ --");
+            File.WriteAllText($"{Application.streamingAssetsPath}/Charts/{filename[0]}.json", newJson);
+            Debug.Log("Done.");
         }
     }
 }

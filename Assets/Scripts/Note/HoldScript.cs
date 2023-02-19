@@ -1,43 +1,41 @@
-ï»¿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HoldScript : MonoBehaviour
 {
-    //éœ€è¦holdçš„æ—¶é—´
-    public float holdTime = 0;
+    //ĞèÒªholdµÄÊ±¼ä
+    private float holdTime = 0;
 
-    //è®¡æ—¶å™¨
-    private float Timer = -10f / 5;
+    //¼ÆÊ±Æ÷
+    private float Timer = -10f / (5 * 1);
 
-    //åˆ¤å®šåºåˆ—é”
+    //ÅĞ¶¨ĞòÁĞËø
     private bool add = true, remove = true, holding = false;
 
     private float holdingTime = 0;
 
-    //ç”¨äºæ”¹å˜é€æ˜åº¦
-    private SpriteRenderer spriteRenderer;
+    private Material material;
 
     private void Awake()
     {
-        spriteRenderer = transform.Find("Hold Body").GetComponent<SpriteRenderer>();
+        material = GetComponent<MeshRenderer>().material;
     }
 
     private void OnEnable()
     {
         //holdTime = DataManager.Instance.holdTime;
         //transform.GetChild(0).transform.localScale = new Vector3(0.8f, 0, 1);
-        spriteRenderer.size = new Vector2(2.63f, (5 * 1f) * holdTime);
-        //ç§»åŠ¨
-        //transform.Translate(0, -(5 * 1f) * Time.deltaTime, 0);
+        transform.position = new Vector3(0.8f, holdTime * 2.5f, 1);
+        transform.Translate(0, holdTime * 2.5f, 0);
     }
 
     private void Update()
     {
-        //è®¡æ—¶
+        //¼ÆÊ±
         Timer += Time.deltaTime;
-        //æ—¶é—´åˆ°æ·»åŠ åˆ°åˆ¤å®šåºåˆ—
+        //Ê±¼äµ½Ìí¼Óµ½ÅĞ¶¨ĞòÁĞ
         if (add && Timer > -0.17f)
         {
             ChartManager.Instance.holdHeadPaddingList.Add(this);
@@ -49,35 +47,30 @@ public class HoldScript : MonoBehaviour
             remove = false;
             Miss();
         }
-        //ç§»åŠ¨
+        //ÒÆ¶¯
         transform.Translate(0, -5 * Time.deltaTime, 0);
     }
 
     private void Miss()
     {
-        //ç‰¹æ•ˆ
-        spriteRenderer.color = new Color(1, 1, 1, 0.3f);
-        //è®¡ç®—åˆ†æ•°
-        //ç§»å‡ºåˆ¤å®šåºåˆ—
+        //ÌØĞ§
+        material.color = new Color(1, 1, 1, 0.3f);
+        //¼ÆËã·ÖÊı
+        //ÒÆ³öÅĞ¶¨ĞòÁĞ
         ChartManager.Instance.holdHeadPaddingList.Remove(this);
         ChartManager.Instance.holdingPaddingList.Remove(this);
-        Destroy(gameObject, holdTime);
+        Destroy(gameObject);
     }
 
-    /// <summary>
-    /// å¤´éƒ¨åˆ¤å®š
-    /// </summary>
-    /// <param name="xPos"></param>
-    /// <returns></returns>
     public bool HeadPadding(float xPos)
     {
         float x = Mathf.Abs(transform.position.x - xPos);
         if (x < 0.4 * 1)
         {
-            //ä»å¤´éƒ¨åˆ¤å®šåºåˆ—ç§»é™¤
+            //´ÓÍ·²¿ÅĞ¶¨ĞòÁĞÒÆ³ı
             remove = false;
             ChartManager.Instance.holdHeadPaddingList.Remove(this);
-            //åŠ å…¥holdingåˆ¤å®š
+            //¼ÓÈëholdingÅĞ¶¨
             ChartManager.Instance.holdingPaddingList.Add(this);
             holding = true;
             StartCoroutine("HoldingTimer");
@@ -102,21 +95,20 @@ public class HoldScript : MonoBehaviour
     {
         while (holding)
         {
-            //æŒ‰ä¸‹æ—¶é—´çš„è®¡æ—¶å™¨
+            //°´ÏÂÊ±¼äµÄ¼ÆÊ±Æ÷
             holdingTime += Time.deltaTime;
             holding = false;
-            transform.position = new Vector3(1, 1, (holdTime - holdingTime) * 5f);
-
-            transform.Translate(0, 5f * Time.deltaTime, 0);
+            transform.position = new Vector3(1, (holdTime - holdingTime) * 7.5f, 1);
+            transform.Translate(0, 7.5f * Time.deltaTime, 0);
             if (holdingTime > holdTime)
             {
                 ChartManager.Instance.holdingPaddingList.Remove(this);
-                //ç”Ÿæˆç‰¹æ•ˆ
-                //è®¡ç®—åˆ†æ•°
+                //Éú³ÉÌØĞ§
+                //¼ÆËã·ÖÊı
                 Destroy(gameObject);
                 break;
             }
-            //æ¯ä¸€å¸§æ‰§è¡Œä¸€æ¬¡
+            //Ã¿Ò»Ö¡Ö´ĞĞÒ»´Î
             yield return 0;
         }
         if (holdingTime < holdTime)

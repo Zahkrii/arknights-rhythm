@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,7 +49,7 @@ public class GameManager : MonoBehaviour
             Timer += Time.deltaTime;
             if (Timer > (data.notes[index].time - 10f / (5 * 1)))//生成位置到判定线路程10个单位，速度默认5单位每秒，相除得下落时间
             {
-                if (data.notes[index].type == 0)//tap
+                if (data.notes[index].type == 0)
                 {
                     GameObject go = Instantiate(
                         tapPrefab,
@@ -59,7 +58,7 @@ public class GameManager : MonoBehaviour
                         notesParent);
                 }
 
-                if (data.notes[index].type == 1)//drag
+                if (data.notes[index].type == 1)
                 {
                     GameObject go = Instantiate(
                         dragPrefab,
@@ -68,14 +67,13 @@ public class GameManager : MonoBehaviour
                         notesParent);
                 }
 
-                if (data.notes[index].type == 2)//hold
+                if (data.notes[index].type == 2)
                 {
                     GameObject go = Instantiate(
                         holdPrefab,
                         new Vector3(data.notes[index].pos, 1.001f, 5.5f),
                         Quaternion.Euler(new Vector3(90, 0, 0)),
                         notesParent);
-                    go.GetComponent<HoldScript>().holdTime = data.notes[index].holdTime;
                 }
 
                 index++;
@@ -91,7 +89,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameStart()
     {
         yield return new WaitForSeconds(3);
-        ScoreManager.Instance.Init(data.id, data.difficulty, data.level, data.count);
+        ScoreManager.Instance.TotalNotes = data.notes.Count;
         isGameStart = true;
         AudioManager.Instance.PlayChartMusic("SE4");
     }
