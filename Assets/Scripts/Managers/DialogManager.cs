@@ -327,9 +327,20 @@ public class DialogManager : MonoBehaviour
     private IEnumerator ShowDialogTextWordByWord(string text, int spriteHide, string location, string _hideLocation)
     {
         // 预处理text,将*PlayerName*替换为玩家名字 SaveManager.PlayerSave.playerName
-        string[] texts = text.Split("*");
-        texts[1] = SaveManager.PlayerSave.playerName;
-        string newText = texts[0] + texts[1] + texts[2];
+        string newText = "";
+        if (text.Contains("*"))
+        {
+            string[] texts = text.Split("*");
+            for (int i = 0; i < texts.Length; i++)
+            {
+                if (texts[i] == "Player")
+                {
+                    texts[i] = SaveManager.PlayerSave.playerName;
+                }
+                newText += texts[i];
+            }
+        }
+        else newText = text;
 
         Stack<char> chars = new Stack<char>();
         for (int i = text.Length - 1; i >= 0; i--)
