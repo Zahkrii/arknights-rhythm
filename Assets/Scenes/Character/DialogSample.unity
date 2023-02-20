@@ -3568,7 +3568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogUIManager: {fileID: 1015181276}
-  dialogDataFile: {fileID: 4900000, guid: 59434b881ed64514b975fbcb2ebd10c9, type: 3}
+  dialogDataFile: {fileID: 4900000, guid: 2061e4d15c76af14f8a618af2176003c, type: 3}
   dialogCanvas: {fileID: 2146320621}
   dialogText: {fileID: 1219801749}
   dialogName: {fileID: 1065338661}

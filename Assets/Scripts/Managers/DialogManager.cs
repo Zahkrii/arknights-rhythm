@@ -117,6 +117,9 @@ public class DialogManager : MonoBehaviour
         }
 
         if (!fadeIn) blackMask.gameObject.SetActive(false);
+        else
+        { // TODO: 场景跳转
+        }
     }
 
     public void OnClickSkipBtn()
@@ -333,9 +336,10 @@ public class DialogManager : MonoBehaviour
             string[] texts = text.Split("*");
             for (int i = 0; i < texts.Length; i++)
             {
-                if (texts[i] == "Player")
+                if (texts[i] == "PlayerName")
                 {
-                    texts[i] = SaveManager.PlayerSave.playerName;
+                    // texts[i] = SaveManager.PlayerSave.playerName;
+                    texts[i] = SaveManager.PlayerSave.playerID;
                 }
                 newText += texts[i];
             }
@@ -429,6 +433,11 @@ public class DialogManager : MonoBehaviour
                 StartCoroutine(Desalt(targetImage, false));
             if (dialogImgLeft.sprite != null && !dialogImgLeftDesalt)
                 StartCoroutine(Desalt(dialogImgLeft, true));
+        }
+        else if (targetImage == dialogImgMid)
+        {
+            if (targetImage.sprite != null && usedImageName == imageName && dialogImgMidDesalt)
+                StartCoroutine(Desalt(targetImage, false));
         }
     }
 
