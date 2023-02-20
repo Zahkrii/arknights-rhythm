@@ -118,7 +118,8 @@ public class DialogManager : MonoBehaviour
 
         if (!fadeIn) blackMask.gameObject.SetActive(false);
         else
-        { // TODO: 场景跳转
+        {
+            // TODO: 场景跳转
         }
     }
 
