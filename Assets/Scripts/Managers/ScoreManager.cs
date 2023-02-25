@@ -1,33 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
-using static UnityEngine.Rendering.DebugUI;
+using System.Linq;
 
 public class ScoreManager : MonoSingleton<ScoreManager>
 {
-    //Ïà¶Ô·ÖÊı
+    //ç›¸å¯¹åˆ†æ•°
     private float _relativeScore = 0;
 
-    //×ÜnoteÊı
-    private float _totalNotes = 0;
+    //æ€»noteæ•°
+    private float _totalNotes;
 
-    //Ìá¹©×ÜnoteÊıµÄĞŞ¸ÄÓë»ñÈ¡
-    public float TotalNotes
-    { get { return _totalNotes; } set { _totalNotes = value; } }
+    private Difficulty _difficulty;
+    private short _level;
 
-    //ÅĞ¶¨·Ö
+    private ChartID _chartID;
+
+    //åˆ¤å®šåˆ†
     private float _paddingScore = 0;
 
-    //Á¬»÷·Ö
+    //è¿å‡»åˆ†
     private float _comboScore = 0;
 
-    //Á¬»÷Êı
+    //è¿å‡»æ•°
     private int _comboCount = 0;
 
-    //×î¸ßcombo
+    //æœ€é«˜combo
     private int _bestCombo = 0;
+
+    private short _perfectCount = 0;
+    private short _goodCount = 0;
+    private short _missCount = 0;
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text comboText;
@@ -37,11 +41,19 @@ public class ScoreManager : MonoSingleton<ScoreManager>
 
     protected override void OnAwake()
     {
-        //³õÊ¼»¯
+        //åˆå§‹åŒ–
         scoreText.text = "0";
         comboText.text = "0";
         scoreTransform = scoreText.gameObject.GetComponent<RectTransform>();
         comboTransform = comboText.gameObject.GetComponent<RectTransform>();
+    }
+
+    public void Init(ChartID id, Difficulty diff, short level, int totalNotes)
+    {
+        _chartID = id;
+        _difficulty = diff;
+        _level = level;
+        _totalNotes = totalNotes;
     }
 
     public void ScoreTap(float hitTime)
@@ -50,14 +62,16 @@ public class ScoreManager : MonoSingleton<ScoreManager>
         if (hitTime <= 0.085)
         {
             _relativeScore += 1;
+            _perfectCount++;
         }
         else
         {
             _relativeScore += 0.6f;
+            _goodCount++;
         }
-        //¼ÆËãÅĞ¶¨·Ö
+        //è®¡ç®—åˆ¤å®šåˆ†
         _paddingScore = (_relativeScore / _totalNotes) * 900000;
-        //¼ÆËãÁ¬»÷·Ö
+        //è®¡ç®—è¿å‡»åˆ†
         if (_comboCount == _bestCombo)
         {
             _bestCombo++;
@@ -67,7 +81,7 @@ public class ScoreManager : MonoSingleton<ScoreManager>
         }
         _comboCount++;
 
-        //¸üĞÂUI
+        //æ›´æ–°UI
         DOTween.To((value) => { scoreTransform.localScale = new Vector3(value, value); }, 1.5f, 1, 0.1f);
         scoreText.text = Mathf.CeilToInt(Mathf.Clamp(_paddingScore + _comboScore, 0, 1000000)).ToString();
         DOTween.To((value) => { comboTransform.localScale = new Vector3(value, value); }, 1.5f, 1, 0.1f);
@@ -81,9 +95,10 @@ public class ScoreManager : MonoSingleton<ScoreManager>
     public void ScoreDrag()
     {
         _relativeScore += 1;
-        //¼ÆËãÅĞ¶¨·Ö
+        _perfectCount++;
+        //è®¡ç®—åˆ¤å®šåˆ†
         _paddingScore = (_relativeScore / _totalNotes) * 900000;
-        //¼ÆËãÁ¬»÷·Ö
+        //è®¡ç®—è¿å‡»åˆ†
         if (_comboCount == _bestCombo)
         {
             _bestCombo++;
@@ -93,7 +108,7 @@ public class ScoreManager : MonoSingleton<ScoreManager>
         }
         _comboCount++;
 
-        //¸üĞÂUI
+        //æ›´æ–°UI
         DOTween.To((value) => { scoreTransform.localScale = new Vector3(value, value); }, 1.5f, 1, 0.1f);
         scoreText.text = Mathf.CeilToInt(Mathf.Clamp(_paddingScore + _comboScore, 0, 1000000)).ToString();
         DOTween.To((value) => { comboTransform.localScale = new Vector3(value, value); }, 2f, 1, 0.1f);
@@ -107,7 +122,51 @@ public class ScoreManager : MonoSingleton<ScoreManager>
     public void MissNote()
     {
         _comboCount = 0;
+        _missCount++;
         DOTween.To((value) => { comboTransform.localScale = new Vector3(value, value); }, 2f, 1, 0.1f);
         comboText.text = _comboCount.ToString();
+    }
+
+    /// <summary>
+    /// ç»Ÿè®¡Ranks
+    /// </summary>
+    /// <returns></returns>
+    private float GetRanks()
+    {
+        if (_paddingScore < 60)
+            return 0;
+        return Mathf.Pow((100 * _paddingScore - 60) / 40, 2) * _level;
+    }
+
+    /// <summary>
+    /// è®¡ç®—æŠ€æœ¯ç­‰çº§
+    /// </summary>
+    private void CalculateLevel()
+    {
+        SaveManager.Open();
+
+        SaveManager.PlayerSave.chartScores[(int)_chartID].SetScore(_difficulty, _paddingScore, _comboScore, GetRanks());
+
+        List<float> rks = new List<float>();
+        foreach (ChartScore chart in SaveManager.PlayerSave.chartScores)
+        {
+            if (chart.scoreEZ.ranks > 0)
+                rks.Add(chart.scoreEZ.ranks);
+            if (chart.scoreNM.ranks > 0)
+                rks.Add(chart.scoreNM.ranks);
+            if (chart.scoreHD.ranks > 0)
+                rks.Add(chart.scoreHD.ranks);
+            if (chart.scoreEX.ranks > 0)
+                rks.Add(chart.scoreEX.ranks);
+        }
+        float level = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            level += rks.Max();
+            rks.Remove(rks.Max());
+        }
+        SaveManager.PlayerSave.level = level / 100 * 120;
+
+        SaveManager.Close();
     }
 }
