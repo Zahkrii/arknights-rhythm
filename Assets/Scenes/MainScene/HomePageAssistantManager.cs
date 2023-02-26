@@ -33,7 +33,7 @@ public class HomePageAssistantManager : MonoBehaviour
 
         if (SaveManager.PlayerSaveExists())
         {
-            SaveManager.Init(playerID: tmp_id);
+            SaveManager.Init(playerName: tmp_id);
             //≥ı ºªØ¥Êµµ
         }
 
