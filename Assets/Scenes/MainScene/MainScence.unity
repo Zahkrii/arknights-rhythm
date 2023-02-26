@@ -578,6 +578,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeTime: 1
   canvasGroup: {fileID: 689225609}
+  dialogtext: {fileID: 788720103}
 --- !u!114 &110361345
 MonoBehaviour:
   m_ObjectHideFlags: 0
