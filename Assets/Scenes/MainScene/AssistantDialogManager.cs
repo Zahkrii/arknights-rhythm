@@ -65,8 +65,10 @@ public class AssistantDialogManager : MonoBehaviour
     IEnumerator HideDialog()
     {
         yield return new WaitForSeconds(5);
+        if (dialogshow == true) { 
         canvasGroup.alpha = 1f;
         canvasGroup.DOFade(0f, fadeTime);
         //dialogtext.text = dialogs[(int)(Random.value * 10) % (dialogs.Count)];
+        }
     }
 }
