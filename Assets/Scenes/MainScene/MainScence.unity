@@ -5811,8 +5811,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5200\u5BA2\u5854"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3936826a87a34c04783bc22971aa7260, type: 2}
+  m_sharedMaterial: {fileID: -8818018627424292652, guid: 3936826a87a34c04783bc22971aa7260, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5836,8 +5836,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6604,6 +6604,7 @@ GameObject:
   - component: {fileID: 2146473076}
   - component: {fileID: 2146473078}
   - component: {fileID: 2146473077}
+  - component: {fileID: 2146473079}
   m_Layer: 5
   m_Name: MainInfoPanel
   m_TagString: Untagged
@@ -6647,7 +6648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6672,3 +6673,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146473075}
   m_CullTransparentMesh: 1
+--- !u!114 &2146473079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146473075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18001db037d6a2a4aaa54dbda3ea071e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doctorNameTMP: {fileID: 1700275691}
+  doctorIDTMP: {fileID: 819660350}
+  LevelTMP: {fileID: 2012275315}
+  currentexpTMP: {fileID: 755964735}

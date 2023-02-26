@@ -35,6 +35,6 @@ public class PlayerProfileManager : MonoBehaviour
         doctorIDTMP.text = doctorID;
         doctorNameTMP.text = "²©Ê¿";
         LevelTMP.text = "120";
-        currentexpTMP.text = "114" + @"/" + "514";
+        currentexpTMP.text = "114" ;
     }
 }
