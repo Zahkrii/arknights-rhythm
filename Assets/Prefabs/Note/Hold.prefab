@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a27131b3c480894ca8a2622423f9826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdTime: 0
+  holdTime: 3
 --- !u!1 &3001685214174667594
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 1
   m_Size: {x: 2.63, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

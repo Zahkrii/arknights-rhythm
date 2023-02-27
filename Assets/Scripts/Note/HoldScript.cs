@@ -16,6 +16,8 @@ public class HoldScript : MonoBehaviour
 
     private float holdingTime = 0;
 
+    private Vector2 tmpSize;
+
     //用于改变透明度
     private SpriteRenderer spriteRenderer;
 
@@ -30,10 +32,10 @@ public class HoldScript : MonoBehaviour
         add = true;
         remove = true;
         holding = false;
-        holdTime = 0;
         holdingTime = 0;
 
-        spriteRenderer.size = new Vector2(2.63f, (5 * 1f) * holdTime);
+        spriteRenderer.size = new Vector2(2.63f, (2.13f * 1f) * holdTime);
+        tmpSize = spriteRenderer.size;
     }
 
     private void Awake()
@@ -113,9 +115,11 @@ public class HoldScript : MonoBehaviour
             //按下时间的计时器
             holdingTime += Time.deltaTime;
             holding = false;
-            transform.position = new Vector3(1, 1, (holdTime - holdingTime) * 5f);
-
-            transform.Translate(0, 5f * Time.deltaTime, 0);
+            Vector3 tmp = transform.position;
+            //transform.position = new Vector3(tmp.x, 1.001f, -4f - (holdTime - holdingTime) * 2f);
+            //transform.Translate(0, 2f * Time.deltaTime, 0);
+            transform.position = new Vector3(tmp.x, 1.001f, -4.5f);
+            spriteRenderer.size = new Vector2(2.63f, tmpSize.y * (holdTime - holdingTime));
             if (holdingTime > holdTime)
             {
                 ChartManager.Instance.holdingPaddingList.Remove(this);
