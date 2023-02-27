@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         //Application.targetFrameRate = 120;
-        data = ChartManager.Instance.LoadChart("SE4");
+        data = ChartManager.Instance.LoadChart("SE4", Difficulty.Hard);
         progressBar.value = 0;
     }
 
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isGameStart && (index < data.notes.Count))
+        if (isGameStart && (index < data.count))
         {
             Timer += Time.deltaTime;
             if (Timer > (data.notes[index].time - 10f / (5 * 1)))//生成位置到判定线路程10个单位，速度默认5单位每秒，相除得下落时间

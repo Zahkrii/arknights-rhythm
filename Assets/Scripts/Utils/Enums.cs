@@ -6,7 +6,7 @@ public enum Difficulty
     Easy = 0,
     Normal,
     Hard,
-    Insane
+    Extra
 }
 
 /// <summary>

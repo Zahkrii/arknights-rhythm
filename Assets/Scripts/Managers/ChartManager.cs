@@ -81,9 +81,25 @@ public class ChartManager : MonoSingleton<ChartManager>
         InitDictionary();
     }
 
-    public Chart LoadChart(string key)
+    public Chart LoadChart(string key, Difficulty difficulty)
     {
-        return JsonUtility.FromJson<Chart>(chartAssets[key].chart.text);
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                return JsonUtility.FromJson<Chart>(chartAssets[key].chartEasy.text);
+
+            case Difficulty.Normal:
+                return JsonUtility.FromJson<Chart>(chartAssets[key].chartNormal.text);
+
+            case Difficulty.Hard:
+                return JsonUtility.FromJson<Chart>(chartAssets[key].chartHard.text);
+
+            case Difficulty.Extra:
+                return JsonUtility.FromJson<Chart>(chartAssets[key].chartExtra.text);
+
+            default:
+                return JsonUtility.FromJson<Chart>(chartAssets[key].chartNormal.text);
+        }
     }
 
     public void LoadChart(string name, Action<Chart> complete = null)

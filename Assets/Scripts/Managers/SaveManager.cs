@@ -74,7 +74,7 @@ public class ChartScore
                     scoreHD.ranks = ranks;
                     break;
                 }
-            case Difficulty.Insane:
+            case Difficulty.Extra:
                 {
                     scoreEX.padding = paddingScore;
                     scoreEX.combo = comboScore;
