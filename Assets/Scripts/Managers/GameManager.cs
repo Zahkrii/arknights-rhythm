@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isGameStart && (index < data.count))
+        if (isGameStart && (index < data.stamps.Count))
         {
             Timer += Time.deltaTime;
             if (Timer > (data.stamps[index].time - 10f / (5 * 1)))//生成位置到判定线路程10个单位，速度默认5单位每秒，相除得下落时间
