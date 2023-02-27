@@ -12,7 +12,9 @@ public class GameManager : MonoBehaviour
     private Chart data;
 
     [SerializeField] private GameObject tapPrefab;
+    [SerializeField] private TapPool tapPool;
     [SerializeField] private GameObject dragPrefab;
+    [SerializeField] private DragPool dragPool;
     [SerializeField] private GameObject holdPrefab;
     [SerializeField] private Transform notesParent;
 
@@ -29,11 +31,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 120;
-        //ChartManager.Instance.LoadChart("ÒõÔÆ»ð»¨", (Chart chart) =>
-        //{
-        //    data = chart;
-        //});
+        //Application.targetFrameRate = 120;
         data = ChartManager.Instance.LoadChart("SE4");
         progressBar.value = 0;
     }
@@ -52,20 +50,22 @@ public class GameManager : MonoBehaviour
             {
                 if (data.notes[index].type == 0)//tap
                 {
-                    GameObject go = Instantiate(
-                        tapPrefab,
-                        new Vector3(data.notes[index].pos, 1.001f, 5.5f),
-                        Quaternion.Euler(new Vector3(90, 0, 0)),
-                        notesParent);
+                    //GameObject go = Instantiate(
+                    //    tapPrefab,
+                    //    new Vector3(data.notes[index].pos, 1.001f, 5.5f),
+                    //    Quaternion.Euler(new Vector3(90, 0, 0)),
+                    //    notesParent);
+                    tapPool.Get();
                 }
 
                 if (data.notes[index].type == 1)//drag
                 {
-                    GameObject go = Instantiate(
-                        dragPrefab,
-                        new Vector3(data.notes[index].pos, 1.001f, 5.5f),
-                        Quaternion.Euler(new Vector3(90, 0, 0)),
-                        notesParent);
+                    //GameObject go = Instantiate(
+                    //    dragPrefab,
+                    //    new Vector3(data.notes[index].pos, 1.001f, 5.5f),
+                    //    Quaternion.Euler(new Vector3(90, 0, 0)),
+                    //    notesParent);
+                    dragPool.Get();
                 }
 
                 if (data.notes[index].type == 2)//hold
