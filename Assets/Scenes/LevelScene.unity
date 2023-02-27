@@ -860,8 +860,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 7256670383935868784, guid: 97c3b6574ab661a4380c9ced694ec24b, type: 3}
-  defaultSize: 20
-  maxSize: 50
+  defaultSize: 40
+  maxSize: 80
   tip: "\u4EE5\u4E0B\u5185\u5BB9\u4EC5\u4F9B\u76D1\u6D4B\uFF0C\u4E0D\u8981\u4FEE\u6539"
   totalCount: 0
   activeCount: 0
@@ -1862,6 +1862,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1231514677}
+  - component: {fileID: 1231514678}
   m_Layer: 0
   m_Name: Hold
   m_TagString: Untagged
@@ -1884,6 +1885,25 @@ Transform:
   m_Father: {fileID: 1672315703}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1231514678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231514676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3925707df59f80145aeefce927929e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 9180274000422635123, guid: db95cf3e9ee47d444949c39dd7765e05, type: 3}
+  defaultSize: 10
+  maxSize: 30
+  tip: "\u4EE5\u4E0B\u5185\u5BB9\u4EC5\u4F9B\u76D1\u6D4B\uFF0C\u4E0D\u8981\u4FEE\u6539"
+  totalCount: 0
+  activeCount: 0
+  inactiveCount: 0
 --- !u!1 &1469807737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2755,6 +2775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c552aec9f7011864fb426e9f610c43a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  perfectVFX: {fileID: 2680146211281164071, guid: 314c6dea4f8f6e84480b7e7734678c94, type: 3}
   perfectVFXPool: {fileID: 156023650}
   goodVFX: {fileID: 6782612050164466712, guid: 008ebdf089a049f46bae40d992f55411, type: 3}
   missVFX: {fileID: 8001002620035472076, guid: bf4685d0fb699ea4c9ef1d941566d69c, type: 3}
@@ -2863,11 +2884,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b75bd63b79ac2428c73f3eb23d894d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tapPrefab: {fileID: 4363347393633055776, guid: 31a4a0e3db8feac42a914afd80396bce, type: 3}
   tapPool: {fileID: 530721000}
-  dragPrefab: {fileID: 5108352261789544257, guid: 97c3b6574ab661a4380c9ced694ec24b, type: 3}
   dragPool: {fileID: 544611214}
-  holdPrefab: {fileID: 3001685212840103643, guid: db95cf3e9ee47d444949c39dd7765e05, type: 3}
+  holdPool: {fileID: 1231514678}
   notesParent: {fileID: 535101667}
   progressBar: {fileID: 1473660355}
 --- !u!4 &2126511436

@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +12,13 @@ public class Chart
     public Difficulty difficulty;
     public short level;
     public int count;
+    public List<Stamp> stamps;
+}
+
+[Serializable]
+public class Stamp
+{
+    public float time;
     public List<Note> notes;
 }
 
@@ -21,32 +28,31 @@ public class Note
     public int id;
     public int type;
     public float pos;
-    public float time;
     public float holdTime;
 }
 
 /// <summary>
-/// Æ×ÃæÊı¾İ´æ´¢Óë¶ÁÈ¡
+/// è°±é¢æ•°æ®å­˜å‚¨ä¸è¯»å–
 /// </summary>
 public class ChartManager : MonoSingleton<ChartManager>
 {
-    //´æ´¢ËùÓĞÆ×Ãæ×ÊÔ´
+    //å­˜å‚¨æ‰€æœ‰è°±é¢èµ„æº
     public Dictionary<string, ChartAsset> chartAssets = new Dictionary<string, ChartAsset>();
 
-    [Header("Æ×Ãæ×ÊÔ´ÁĞ±í")]
+    [Header("è°±é¢èµ„æºåˆ—è¡¨")]
     [SerializeField] private List<SerializableKeyValuePair> chartAssetList = new List<SerializableKeyValuePair>();
 
-    // Tap ÅĞ¶¨ĞòÁĞ
-    [Header("Æ×ÃæÊı¾İ")]
+    // Tap åˆ¤å®šåºåˆ—
+    [Header("è°±é¢æ•°æ®")]
     public List<TapScript> tapPaddingList = new List<TapScript>();
 
-    //Drag ÅĞ¶¨ĞòÁĞ
+    //Drag åˆ¤å®šåºåˆ—
     public List<DragScript> dragPaddingList = new List<DragScript>();
 
-    //Hold Í·²¿ÅĞ¶¨ĞòÁĞ
+    //Hold å¤´éƒ¨åˆ¤å®šåºåˆ—
     public List<HoldScript> holdHeadPaddingList = new List<HoldScript>();
 
-    //Hold ÅĞ¶¨ĞòÁĞ
+    //Hold åˆ¤å®šåºåˆ—
     public List<HoldScript> holdingPaddingList = new List<HoldScript>();
 
     //public float holdTime = 0f;
@@ -65,7 +71,7 @@ public class ChartManager : MonoSingleton<ChartManager>
     }
 
     /// <summary>
-    /// ³õÊ¼»¯×Öµä£¬Ê¹ÓÃÇ°±ØĞëÖ´ĞĞ
+    /// åˆå§‹åŒ–å­—å…¸ï¼Œä½¿ç”¨å‰å¿…é¡»æ‰§è¡Œ
     /// </summary>
     public void InitDictionary()
     {
@@ -116,12 +122,12 @@ public class ChartManager : MonoSingleton<ChartManager>
 
         if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
         {
-            Debug.LogError($"´Ó¸ÃµØÖ·ÏÂÔØ³ö´í£º{chartPath}");
+            Debug.LogError($"ä»è¯¥åœ°å€ä¸‹è½½å‡ºé”™ï¼š{chartPath}");
             yield break;
-            //TODO: ÏÂÔØÖØÊÔ
+            //TODO: ä¸‹è½½é‡è¯•
         }
         var json = webRequest.downloadHandler.text;
-        // Ïú»Ù
+        // é”€æ¯
         webRequest.Dispose();
         var data = JsonUtility.FromJson<Chart>(json);
         complete?.Invoke(data);

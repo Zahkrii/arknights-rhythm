@@ -19,18 +19,26 @@ public class HoldScript : MonoBehaviour
     //用于改变透明度
     private SpriteRenderer spriteRenderer;
 
-    private void Awake()
-    {
-        spriteRenderer = transform.Find("Hold Body").GetComponent<SpriteRenderer>();
-    }
+    //销毁处理
+    private Action<TapScript> destroyAction;
+
+    public void SetDestroyAction(Action<TapScript> destroyAction) => this.destroyAction = destroyAction;
 
     private void OnEnable()
     {
-        //holdTime = DataManager.Instance.holdTime;
-        //transform.GetChild(0).transform.localScale = new Vector3(0.8f, 0, 1);
+        Timer = -10f / 5;
+        add = true;
+        remove = true;
+        holding = false;
+        holdTime = 0;
+        holdingTime = 0;
+
         spriteRenderer.size = new Vector2(2.63f, (5 * 1f) * holdTime);
-        //移动
-        //transform.Translate(0, -(5 * 1f) * Time.deltaTime, 0);
+    }
+
+    private void Awake()
+    {
+        spriteRenderer = transform.Find("Hold Body").GetComponent<SpriteRenderer>();
     }
 
     private void Update()
