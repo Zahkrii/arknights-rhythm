@@ -14,5 +14,9 @@ public class ChartAsset : ScriptableObject //定义一个谱面资源，方便�
     public AudioClip music;
 
     [Header("谱面数据")]
-    public TextAsset chart;
+    public TextAsset chartEasy;
+
+    public TextAsset chartNormal;
+    public TextAsset chartHard;
+    public TextAsset chartExtra;
 }
