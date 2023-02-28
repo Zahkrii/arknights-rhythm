@@ -15,7 +15,7 @@ MonoBehaviour:
   album: {fileID: 0}
   albumBlur: {fileID: 0}
   music: {fileID: 8300000, guid: 3ca29cb0b20a4b24a901eb301c17a7bf, type: 3}
-  chartEasy: {fileID: 4900000, guid: 4dec8800d29c9dc4aa9c75d44ffe1d9b, type: 3}
-  chartNormal: {fileID: 0}
+  chartEasy: {fileID: 4900000, guid: 26121792c93df9b4e8d4b1008310e14f, type: 3}
+  chartNormal: {fileID: 4900000, guid: 053903aa7aaa8554fb87580dd7884a30, type: 3}
   chartHard: {fileID: 4900000, guid: a9e80ef2f9a80f248b7561184318eed2, type: 3}
   chartExtra: {fileID: 0}
