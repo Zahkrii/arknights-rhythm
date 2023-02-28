@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class Chart
 {
@@ -54,8 +55,6 @@ public class ChartManager : MonoSingleton<ChartManager>
 
     //Hold 判定序列
     public List<HoldScript> holdingPaddingList = new List<HoldScript>();
-
-    //public float holdTime = 0f;
 
     [Serializable]
     private struct SerializableKeyValuePair
@@ -108,12 +107,17 @@ public class ChartManager : MonoSingleton<ChartManager>
         }
     }
 
-    public void LoadChart(string name, Action<Chart> complete = null)
+    public ChartAsset LoadChartAsset(string key)
+    {
+        return chartAssets[key];
+    }
+
+    private void LoadChart(string name, Action<Chart> complete = null)
     {
         StartCoroutine(LoadChartAsync(name, complete));
     }
 
-    public IEnumerator LoadChartAsync(string name, Action<Chart> complete = null)
+    private IEnumerator LoadChartAsync(string name, Action<Chart> complete = null)
     {
         string chartPath = Path.Combine($"{Application.streamingAssetsPath}/Charts", $"{name}.json");
 

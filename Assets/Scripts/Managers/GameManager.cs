@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
                         //go.GetComponent<HoldScript>().holdTime = data.notes[index].holdTime;
                         var hold = holdPool.Get();
                         hold.gameObject.transform.position = new Vector3(note.pos, 1.001f, 5.5f);
-                        hold.holdTime = note.holdTime;
+                        hold.SetHoldTime(note.holdTime);
                     }
                 }
 
