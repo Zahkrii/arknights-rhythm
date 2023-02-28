@@ -76,15 +76,30 @@ public static class SettingsManager
     /// <summary>
     /// 当前选择的曲目：用于从选曲场景到谱面场景传参
     /// </summary>
-    public static int ChartSelected
+    public static ChartID SelectedChartID
     {
         get
         {
-            return PlayerPrefs.GetInt("ChartSelected");
+            return (ChartID)PlayerPrefs.GetInt("SelectedChartID");
         }
         set
         {
-            PlayerPrefs.SetInt("ChartSelected", value);
+            PlayerPrefs.SetInt("SelectedChartID", (int)value);
+        }
+    }
+
+    /// <summary>
+    /// 当前选择的曲目难度：用于从选曲场景到谱面场景传参
+    /// </summary>
+    public static Difficulty SelectedDifficulty
+    {
+        get
+        {
+            return (Difficulty)PlayerPrefs.GetInt("SelectedDifficulty");
+        }
+        set
+        {
+            PlayerPrefs.SetInt("SelectedDifficulty", (int)value);
         }
     }
 
