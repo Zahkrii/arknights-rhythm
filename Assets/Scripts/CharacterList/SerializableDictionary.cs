@@ -5,7 +5,8 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-public class SerializableDictionary { }
+public class SerializableDictionary
+{ }
 
 [Serializable]
 public class SerializableDictionary<TKey, TValue> :
@@ -46,7 +47,8 @@ public class SerializableDictionary<TKey, TValue> :
         return dictionary;
     }
 
-    public void OnBeforeSerialize() { }
+    public void OnBeforeSerialize()
+    { }
 
     public void OnAfterDeserialize()
     {
@@ -119,7 +121,7 @@ public class SerializableDictionary<TKey, TValue> :
         }
     }
 
-    #endregion
+    #endregion IDictionary<TKey, TValue>
 
     #region ICollection <KeyValuePair<TKey, TValue>>
 
@@ -129,6 +131,7 @@ public class SerializableDictionary<TKey, TValue> :
     public void Add(KeyValuePair<TKey, TValue> kvp) => Add(kvp.Key, kvp.Value);
 
     public void Clear() => list.Clear();
+
     public bool Contains(KeyValuePair<TKey, TValue> kvp) => KeyPositions.ContainsKey(kvp.Key);
 
     public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
@@ -145,7 +148,7 @@ public class SerializableDictionary<TKey, TValue> :
 
     public bool Remove(KeyValuePair<TKey, TValue> kvp) => Remove(kvp.Key);
 
-    #endregion
+    #endregion ICollection <KeyValuePair<TKey, TValue>>
 
     #region IEnumerable <KeyValuePair<TKey, TValue>>
 
@@ -161,8 +164,10 @@ public class SerializableDictionary<TKey, TValue> :
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    #endregion
+    #endregion IEnumerable <KeyValuePair<TKey, TValue>>
 }
+
+#if UNITY_EDITOR
 
 [CustomPropertyDrawer(typeof(SerializableDictionary), true)]
 public class SerializableDictionaryDrawer : PropertyDrawer
@@ -182,3 +187,5 @@ public class SerializableDictionaryDrawer : PropertyDrawer
         return EditorGUI.GetPropertyHeight(getListProperty(property), true);
     }
 }
+
+#endif
