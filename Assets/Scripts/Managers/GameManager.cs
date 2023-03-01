@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         //Application.targetFrameRate = 120;
-        data = ChartManager.Instance.LoadChart("SE4", Difficulty.Hard);
+        data = ChartManager.Instance.LoadChart("SE4", Difficulty.Normal);
         progressBar.value = 0;
     }
 
