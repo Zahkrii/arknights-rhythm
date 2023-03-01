@@ -3575,7 +3575,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 979938727}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1109187391}
+        m_TargetAssemblyTypeName: CharListBtnsManager, Assembly-CSharp
+        m_MethodName: OnHomeButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &979938727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3696,7 +3708,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1056529965}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1109187391}
+        m_TargetAssemblyTypeName: CharListBtnsManager, Assembly-CSharp
+        m_MethodName: OnHomeButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1056529965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3749,6 +3773,7 @@ GameObject:
   - component: {fileID: 1109187385}
   - component: {fileID: 1109187389}
   - component: {fileID: 1109187390}
+  - component: {fileID: 1109187391}
   m_Layer: 5
   m_Name: Main Canvas
   m_TagString: Untagged
@@ -3873,6 +3898,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterListCanvas: {fileID: 1779635264}
   characterDetailCanvas: {fileID: 1811901624}
+--- !u!114 &1109187391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109187384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 230cf238111376849b03541ac7eb1545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1149175416
 GameObject:
   m_ObjectHideFlags: 0
@@ -6486,7 +6523,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1954051415}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1109187391}
+        m_TargetAssemblyTypeName: CharListBtnsManager, Assembly-CSharp
+        m_MethodName: OnHomeButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1954051415
 MonoBehaviour:
   m_ObjectHideFlags: 0
