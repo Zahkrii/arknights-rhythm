@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.U2D.Animation;
+//using UnityEditor.U2D.Animation;
+//注意不要使用，以免导致build失败
 using UnityEngine;
 
 public class HomePageAssistantManager : MonoBehaviour
