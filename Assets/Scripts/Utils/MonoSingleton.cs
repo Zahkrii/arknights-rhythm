@@ -20,6 +20,7 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
+
     private void Awake()
     {
         if (global)
