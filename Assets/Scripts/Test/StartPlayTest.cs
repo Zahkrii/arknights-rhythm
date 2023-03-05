@@ -8,8 +8,10 @@ public class StartPlayTest : MonoBehaviour
     //进入关卡开始游戏的例子
     private void StartPlay()
     {
-        //先将选择的曲目代号存入 SettingsManager.ChartSelected
-        SettingsManager.ChartSelected = (int)ChartID.SE_4;
+        //先将选择的曲目代号存入 SettingsManager.SelectedChartID
+        SettingsManager.SelectedChartID = ChartID.SE_4;
+        //设置难度
+        SettingsManager.SelectedDifficulty = Difficulty.Hard;
         //设置谱面流速
         SettingsManager.ChartSpeed = 5;
         //设置谱面延时

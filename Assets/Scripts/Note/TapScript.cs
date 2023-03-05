@@ -9,6 +9,18 @@ public class TapScript : MonoBehaviour
 
     private bool add = true, remove = true;
 
+    //销毁处理
+    private Action<TapScript> destroyAction;
+
+    public void SetDestroyAction(Action<TapScript> destroyAction) => this.destroyAction = destroyAction;
+
+    private void OnEnable()
+    {
+        Timer = -10f / 5;
+        add = true;
+        remove = true;
+    }
+
     private void Update()
     {
         //计时
@@ -37,7 +49,8 @@ public class TapScript : MonoBehaviour
         ScoreManager.Instance.MissNote();
         //从判定序列移除
         ChartManager.Instance.tapPaddingList.Remove(this);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        destroyAction.Invoke(this);
     }
 
     /// <summary>
@@ -57,7 +70,8 @@ public class TapScript : MonoBehaviour
             ScoreManager.Instance.ScoreTap(Timer);
             //从判定序列移除
             ChartManager.Instance.tapPaddingList.Remove(this);
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            destroyAction.Invoke(this);
             return true;
         }
         return false;

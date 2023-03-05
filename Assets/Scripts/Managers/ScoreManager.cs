@@ -59,7 +59,42 @@ public class ScoreManager : MonoSingleton<ScoreManager>
     public void ScoreTap(float hitTime)
     {
         hitTime = Mathf.Abs(hitTime);
-        if (hitTime <= 0.085)
+        if (hitTime <= 0.085f)
+        {
+            _relativeScore += 1;
+            _perfectCount++;
+        }
+        else
+        {
+            _relativeScore += 0.6f;
+            _goodCount++;
+        }
+        //计算判定分
+        _paddingScore = (_relativeScore / _totalNotes) * 900000;
+        //计算连击分
+        if (_comboCount == _bestCombo)
+        {
+            _bestCombo++;
+            //Debug
+            DebugPanel.Instance.LogBestCombo(_bestCombo);
+            _comboScore = (_bestCombo / _totalNotes) * 100000;
+        }
+        _comboCount++;
+
+        //更新UI
+        DOTween.To((value) => { scoreTransform.localScale = new Vector3(value, value); }, 1.5f, 1, 0.1f);
+        scoreText.text = Mathf.CeilToInt(Mathf.Clamp(_paddingScore + _comboScore, 0, 1000000)).ToString();
+        DOTween.To((value) => { comboTransform.localScale = new Vector3(value, value); }, 1.5f, 1, 0.1f);
+        comboText.text = _comboCount.ToString();
+
+        //Debug
+        DebugPanel.Instance.LogPaddingScore(_paddingScore);
+        DebugPanel.Instance.LogComboScore(_comboScore);
+    }
+
+    public void ScoreHold(bool isPerfect)
+    {
+        if (isPerfect)
         {
             _relativeScore += 1;
             _perfectCount++;

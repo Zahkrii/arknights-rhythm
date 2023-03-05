@@ -5,6 +5,7 @@ using UnityEngine;
 public class VFXManager : MonoBehaviour
 {
     [SerializeField] private GameObject perfectVFX;
+    [SerializeField] private PerfectVFXPool perfectVFXPool;
     [SerializeField] private GameObject goodVFX;
     [SerializeField] private GameObject missVFX;
 
@@ -32,8 +33,10 @@ public class VFXManager : MonoBehaviour
                 new Vector3(xPos, 1.001f, -4.5f),
                 Quaternion.Euler(new Vector3(0, 0, 0)),
                 this.transform);
+            //var vfx = perfectVFXPool.Get();
+            //vfx.transform.position = new Vector3(xPos, 0, 0);
         }
-        else if (Mathf.Abs(hitTime) <= 0.17f)
+        else
         {
             Instantiate(
                 goodVFX,
@@ -50,6 +53,8 @@ public class VFXManager : MonoBehaviour
                 new Vector3(xPos, 1.001f, -4.5f),
                 Quaternion.Euler(new Vector3(0, 0, 0)),
                 this.transform);
+        //var vfx = perfectVFXPool.Get();
+        //vfx.transform.position = new Vector3(xPos, 0, 0);
     }
 
     public void ShowMissEffect(float xPos)
@@ -59,5 +64,27 @@ public class VFXManager : MonoBehaviour
                 new Vector3(xPos, 1.001f, -4.5f),
                 Quaternion.Euler(new Vector3(0, 0, 0)),
                 this.transform);
+    }
+
+    public void ShowEffect(bool isPerfect, float xPos)
+    {
+        if (isPerfect)
+        {
+            Instantiate(
+                perfectVFX,
+                new Vector3(xPos, 1.001f, -4.5f),
+                Quaternion.Euler(new Vector3(0, 0, 0)),
+                this.transform);
+            //var vfx = perfectVFXPool.Get();
+            //vfx.transform.position = new Vector3(xPos, 0, 0);
+        }
+        else
+        {
+            Instantiate(
+                goodVFX,
+                new Vector3(xPos, 1.001f, -4.5f),
+                Quaternion.Euler(new Vector3(0, 0, 0)),
+                this.transform);
+        }
     }
 }

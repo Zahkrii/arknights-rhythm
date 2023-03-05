@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,5 +47,11 @@ public class CharacterCell : MonoBehaviour
             characterLock.SetActive(true);
             characterPress.interactable = false;
         }
+    }
+
+    public void OnClick()
+    {
+        // 设置干员详情界面   
+        CharacterDetailManager.instance.SetCharacterData(characterData);
     }
 }
