@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,33 +8,29 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    //∆◊√Ê ˝æ›
+    //Ë∞±Èù¢Êï∞ÊçÆ
     private Chart data;
 
-    [SerializeField] private GameObject tapPrefab;
-    [SerializeField] private GameObject dragPrefab;
-    [SerializeField] private GameObject holdPrefab;
+    [SerializeField] private TapPool tapPool;
+    [SerializeField] private DragPool dragPool;
+    [SerializeField] private HoldPool holdPool;
     [SerializeField] private Transform notesParent;
 
-    //Ω¯∂»Ãı
+    //ËøõÂ∫¶Êù°
     [SerializeField] private Slider progressBar;
 
-    //º∆ ±∆˜
+    //ËÆ°Êó∂Âô®
     private float Timer = 0;
 
-    //noteÀ˜“˝
+    //noteÁ¥¢Âºï
     private int index = 0;
 
     private bool isGameStart = false;
 
     private void Awake()
     {
-        Application.targetFrameRate = 120;
-        //ChartManager.Instance.LoadChart("“ı‘∆ªª®", (Chart chart) =>
-        //{
-        //    data = chart;
-        //});
-        data = ChartManager.Instance.LoadChart("SE4");
+        //Application.targetFrameRate = 120;
+        data = ChartManager.Instance.LoadChart("SE4", Difficulty.Normal);
         progressBar.value = 0;
     }
 
@@ -45,37 +41,47 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isGameStart && (index < data.notes.Count))
+        if (isGameStart && (index < data.stamps.Count))
         {
             Timer += Time.deltaTime;
-            if (Timer > (data.notes[index].time - 10f / (5 * 1)))//…˙≥…Œª÷√µΩ≈–∂®œﬂ¬∑≥Ã10∏ˆµ•Œª£¨ÀŸ∂»ƒ¨»œ5µ•Œª√ø√Î£¨œ‡≥˝µ√œ¬¬‰ ±º‰
+            if (Timer > (data.stamps[index].time - 10f / (5 * 1)))//ÁîüÊàê‰ΩçÁΩÆÂà∞Âà§ÂÆöÁ∫øË∑ØÁ®ã10‰∏™Âçï‰ΩçÔºåÈÄüÂ∫¶ÈªòËÆ§5Âçï‰ΩçÊØèÁßíÔºåÁõ∏Èô§Âæó‰∏ãËêΩÊó∂Èó¥
             {
-                if (data.notes[index].type == 0)//tap
+                foreach (var note in data.stamps[index].notes)
                 {
-                    GameObject go = Instantiate(
-                        tapPrefab,
-                        new Vector3(data.notes[index].pos, 1.001f, 5.5f),
-                        Quaternion.Euler(new Vector3(90, 0, 0)),
-                        notesParent);
-                }
+                    if (note.type == 0)//tap
+                    {
+                        //GameObject go = Instantiate(
+                        //    tapPrefab,
+                        //    new Vector3(data.notes[index].pos, 1.001f, 5.5f),
+                        //    Quaternion.Euler(new Vector3(90, 0, 0)),
+                        //    notesParent);
+                        var tap = tapPool.Get();
+                        tap.gameObject.transform.position = new Vector3(note.pos, 1.001f, 5.5f);
+                    }
 
-                if (data.notes[index].type == 1)//drag
-                {
-                    GameObject go = Instantiate(
-                        dragPrefab,
-                        new Vector3(data.notes[index].pos, 1.001f, 5.5f),
-                        Quaternion.Euler(new Vector3(90, 0, 0)),
-                        notesParent);
-                }
+                    if (note.type == 1)//drag
+                    {
+                        //GameObject go = Instantiate(
+                        //    dragPrefab,
+                        //    new Vector3(data.notes[index].pos, 1.001f, 5.5f),
+                        //    Quaternion.Euler(new Vector3(90, 0, 0)),
+                        //    notesParent);
+                        var drag = dragPool.Get();
+                        drag.gameObject.transform.position = new Vector3(note.pos, 1.001f, 5.5f);
+                    }
 
-                if (data.notes[index].type == 2)//hold
-                {
-                    GameObject go = Instantiate(
-                        holdPrefab,
-                        new Vector3(data.notes[index].pos, 1.001f, 5.5f),
-                        Quaternion.Euler(new Vector3(90, 0, 0)),
-                        notesParent);
-                    go.GetComponent<HoldScript>().holdTime = data.notes[index].holdTime;
+                    if (note.type == 2)//hold
+                    {
+                        //GameObject go = Instantiate(
+                        //    holdPrefab,
+                        //    new Vector3(data.notes[index].pos, 1.001f, 5.5f),
+                        //    Quaternion.Euler(new Vector3(90, 0, 0)),
+                        //    notesParent);
+                        //go.GetComponent<HoldScript>().holdTime = data.notes[index].holdTime;
+                        var hold = holdPool.Get();
+                        hold.gameObject.transform.position = new Vector3(note.pos, 1.001f, 5.5f);
+                        hold.SetHoldTime(note.holdTime);
+                    }
                 }
 
                 index++;

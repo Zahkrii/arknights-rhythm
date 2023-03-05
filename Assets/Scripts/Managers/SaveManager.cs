@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 
 public class SaveFile
 {
     public string playerID; //玩家ID
+    public string playerName; //玩家名称
     public float level = 0; //技术等级
     public List<ChartScore> chartScores; //分数列表
     public List<Opreator> opreators; //已解锁/获得的干员列表
@@ -24,7 +24,7 @@ public class Opreator
 [Serializable]
 public class ChartScore
 {
-    public short id; //曲目ID
+    public ChartID id; //曲目ID
 
     //简单难度（Easy）
     public Score scoreEZ;
@@ -74,7 +74,7 @@ public class ChartScore
                     scoreHD.ranks = ranks;
                     break;
                 }
-            case Difficulty.Insane:
+            case Difficulty.Extra:
                 {
                     scoreEX.padding = paddingScore;
                     scoreEX.combo = comboScore;
@@ -114,17 +114,17 @@ public static class SaveManager
     /// <summary>
     /// 初始化存档文件
     /// </summary>
-    /// <param name="playerID">玩家ID</param>
-    public static void Init(string playerID)
+    /// <param name="playerName">玩家名称</param>
+    public static void Init(string playerName)
     {
         //新建存档
         SaveFile newSave = new SaveFile();
-        newSave.playerID = playerID;
+        newSave.playerName = playerName;
         //初始化曲目
         newSave.chartScores = new List<ChartScore>();
         foreach (ChartID id in Enum.GetValues(typeof(ChartID)))
         {
-            newSave.chartScores.Add(new ChartScore { id = (short)id });
+            newSave.chartScores.Add(new ChartScore { id = id });
         }
         //初始化干员
         newSave.opreators = new List<Opreator>
@@ -133,6 +133,9 @@ public static class SaveManager
             new Opreator { id = OpreatorID.Logos },
             new Opreator { id = OpreatorID.Mountain }
         };
+        //根据时间生成唯一ID
+        TimeSpan timeStamp = DateTime.Now.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        newSave.playerID = $"{UnityEngine.Random.Range(100, 999)}{timeStamp.TotalSeconds.ToString().Substring(3, 6)}";
         //保存
         SaveToFile(newSave, FILENAME);
     }

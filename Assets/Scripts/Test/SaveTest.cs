@@ -12,7 +12,7 @@ public class SaveTest : MonoBehaviour
         //存档管理器第一次使用前一定要先初始化（建立存档）。
         //存档初始化需要提供玩家ID，因此可以在玩家第一次进入游戏，输入玩家ID时进行初始化。
         //警告：只能使用一次初始化，否则将覆盖已有存档，使用前一定要先通过 SaveManager.PlayerSaveExists() 判断
-        SaveManager.Init(playerID: "CB05");
+        SaveManager.Init(playerName: "CB05");
 
         //至于如何判断是否第一次进入游戏，可以使用 PlayerSaveExists() 来判断存档是否存在
         //不存在：第一次进入游戏，存在：那就读取存档吧

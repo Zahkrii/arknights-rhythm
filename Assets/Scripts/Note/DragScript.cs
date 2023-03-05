@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +9,17 @@ public class DragScript : MonoBehaviour
 
     private bool add = true, remove = true;
 
-    //Note数据
-    private float size = 1;
+    //销毁处理
+    private Action<DragScript> destroyAction;
 
-    public float Size
-    { set { size = value; } }
+    public void SetDestroyAction(Action<DragScript> destroyAction) => this.destroyAction = destroyAction;
+
+    private void OnEnable()
+    {
+        Timer = -10f / 5;
+        add = true;
+        remove = true;
+    }
 
     // Update is called once per frame
     private void Update()
@@ -40,7 +47,8 @@ public class DragScript : MonoBehaviour
         ScoreManager.Instance.MissNote();
         //从判定序列移除
         ChartManager.Instance.dragPaddingList.Remove(this);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        destroyAction.Invoke(this);
     }
 
     /// <summary>
@@ -51,7 +59,7 @@ public class DragScript : MonoBehaviour
     public bool PaddingNote(float xPos)
     {
         float x = Mathf.Abs(transform.position.x - xPos);
-        if (x < 0.4 * size)
+        if (x < 0.4 * 1)
         {
             //生成特效
             VFXManager.Instance.ShowDragEffect(xPos);
@@ -60,7 +68,8 @@ public class DragScript : MonoBehaviour
             ScoreManager.Instance.ScoreDrag();
             //从判定序列移除
             ChartManager.Instance.dragPaddingList.Remove(this);
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            destroyAction.Invoke(this);
             return true;
         }
         return false;
