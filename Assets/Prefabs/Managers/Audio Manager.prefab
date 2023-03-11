@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   global: 1
   sfxAssets: {fileID: 11400000, guid: e80ba215751e78e40b19c5627252b559, type: 2}
-  musicAssets: {fileID: 11400000, guid: 73d45b403d3ec3445bb6a3174f0a8d96, type: 2}
+  musicAssets: {fileID: 11400000, guid: 2fd88be80f9462d4e994e654242969d8, type: 2}
