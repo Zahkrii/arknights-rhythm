@@ -12,7 +12,7 @@ public class LoadingChecker : MonoBehaviour
     public GameObject FirstLoadingUI;
     public GameObject LoadingUI;
     //首次登陆页面
-    public InputField NameField;
+    public TMP_InputField NameField;
     public Button ConfirmButton;
     private Sequence NameCardImage; //信息卡动画序列
     public float MovingLength;
@@ -21,8 +21,8 @@ public class LoadingChecker : MonoBehaviour
     public Image Line_1;//上分割线
     public Image Line_2;//下分割线
     public Image BtnImage;//确认按钮图片
-    public Text Guide;//指导文字
-    public Text PreInput;//输入框文字
+    public TextMeshProUGUI Guide;//指导文字
+    public TextMeshProUGUI PreInput;//输入框文字
     private Sequence NameCardOut; //信息卡动画序列
     public Image Loading_f;//登陆按钮图片
     public Image Title_f;//游戏标题
@@ -45,9 +45,11 @@ public class LoadingChecker : MonoBehaviour
             NameCardImage.Append(NameCard.transform.DOMove(new Vector3(NameCard.transform.position.x - MovingLength, NameCard.transform.position.y, NameCard.transform.position.z), 1f).SetEase(Ease.OutQuad));
             NameCardImage.Append(DocImage.DOFade(1,1));//博士头像出现
             NameCardImage.Append(Line_1.DOFade(1, 0.5f));//上分割线出现
-            NameCardImage.Append(Guide.DOText("您好博士，欢迎登陆RROS\r\n或许\r\n您对这里的环境一无所知\r\n但是请不要担心\r\n我将暂时代替PRTS\r\n为您提供相应的系统指引\r\n......\r\n那么，您的用户名是......", 4f).SetEase(Ease.Linear));
+            string text = "您好博士，欢迎登陆RROS\r\n或许\r\n您对这里的环境一无所知\r\n但是请不要担心\r\n我将暂时代替PRTS\r\n为您提供相应的系统指引\r\n......\r\n那么，您的用户名是......";
+            NameCardImage.Append(DOTween.To(() => string.Empty, value => Guide.text = value, text, 3f).SetEase(Ease.Linear));
             NameCardImage.Append(Line_2.DOFade(1, 0.5f));//下分割线出现
-            NameCardImage.Append(PreInput.DOText("请输入姓名", 1f));
+            string text2 = "请输入姓名";
+            NameCardImage.Append(DOTween.To(() => string.Empty, value => PreInput.text = value, text2, 1f).SetEase(Ease.Linear));
             NameCardImage.Append(BtnImage.DOFade(1, 0.5f));//下分割线出现
         }
         else//进入普通登陆页面
@@ -64,7 +66,7 @@ public class LoadingChecker : MonoBehaviour
     {
         Loading.DOFade(1, 4);
     }
-    void LockInput(InputField input)
+    void LockInput(TMP_InputField input)
     {
         LoadingBtn_f.SetActive(true);
 
