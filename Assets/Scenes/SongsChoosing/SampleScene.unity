@@ -3759,7 +3759,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1639218175}
   m_Direction: 0
   m_Value: 0.00000011257268
-  m_Size: 0.47518283
+  m_Size: 0.23759148
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4210,6 +4210,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1408030903649476800, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: musicAssets
+      value: 
+      objectReference: {fileID: 11400000, guid: 2fd88be80f9462d4e994e654242969d8, type: 2}
     - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
       propertyPath: m_RootOrder
       value: 5

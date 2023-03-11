@@ -23,7 +23,7 @@ private void Awake()
         if (SaveManager.PlayerSaveExists())
         {
             SaveManager.Open();
-            DoctorNamePre.GetComponent<TextMeshProUGUI>().text = SaveManager.PlayerSave.playerID;
+            DoctorNamePre.GetComponent<TextMeshProUGUI>().text = SaveManager.PlayerSave.playerName;
             SaveManager.Close();
         }
         NameInputField.GetComponent<TMP_InputField>().onEndEdit.AddListener(delegate { LockInput(NameInputField.GetComponent<TMP_InputField>()); });//插入编辑结束时事件：修改存档中名字
@@ -42,8 +42,8 @@ private void Awake()
             if (SaveManager.PlayerSaveExists())
             {
                 SaveManager.Open();
-                SaveManager.PlayerSave.playerID = input.text;
-                DoctorNamePre.GetComponent<TextMeshProUGUI>().text = SaveManager.PlayerSave.playerID;
+                SaveManager.PlayerSave.playerName = input.text;
+                DoctorNamePre.GetComponent<TextMeshProUGUI>().text = SaveManager.PlayerSave.playerName;
                 SaveManager.Close();
             }
         }
@@ -59,7 +59,7 @@ private void Awake()
         if (SaveManager.PlayerSaveExists())
         {
             SaveManager.Open();
-            NameID.GetComponent<TextMeshProUGUI>().text = "玩家ID:\t\t\t" + SaveManager.PlayerSave.playerID;
+            NameID.GetComponent<TextMeshProUGUI>().text = "玩家ID:\t\t\t" + SaveManager.PlayerSave.playerName;
             SaveManager.Close();
         }
     }

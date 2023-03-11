@@ -540,7 +540,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u535A\u58EB\u7B49\u7EA7:\t\t100/120"
+  m_text: "\u535A\u58EB\u7B49\u7EA7:\t\t\t100/120"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: df58df1a30c333c4f9e83589c1af1a94, type: 2}
   m_sharedMaterial: {fileID: 5288112959948555854, guid: df58df1a30c333c4f9e83589c1af1a94, type: 2}
@@ -1556,6 +1556,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831404694}
   m_CullTransparentMesh: 1
+--- !u!1001 &931544109
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1408030903649476800, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: musicAssets
+      value: 
+      objectReference: {fileID: 11400000, guid: 2fd88be80f9462d4e994e654242969d8, type: 2}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476801, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1408030903649476802, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
+      propertyPath: m_Name
+      value: Audio Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a01195bb9f002fc41b6212ff668b627e, type: 3}
 --- !u!1 &959375501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2418,7 +2479,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5E72\u5458\u89E3\u9501\u6570\u91CF:\t7/9"
+  m_text: "\u5E72\u5458\u89E3\u9501\u6570\u91CF:\t\t7/9"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: df58df1a30c333c4f9e83589c1af1a94, type: 2}
   m_sharedMaterial: {fileID: 5288112959948555854, guid: df58df1a30c333c4f9e83589c1af1a94, type: 2}

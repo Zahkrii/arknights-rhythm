@@ -18,16 +18,16 @@ public class NameOperatornumLevelShowing : MonoBehaviour
             SaveManager.Open();
             //Debug.Log("已打开存档文件");
             //姓名读取
-            if (NameID!=null) NameID.GetComponent<TextMeshProUGUI>().text = "玩家ID:\t\t\t" + SaveManager.PlayerSave.playerID;
+            if (NameID!=null) NameID.GetComponent<TextMeshProUGUI>().text = "玩家ID:\t\t\t" + SaveManager.PlayerSave.playerName;
             //干员解锁数量读取
             for (int i = 0; i < SaveManager.PlayerSave.opreators.Count; i++)
             {
                 UnlockOperatorsNum++;
             }
-            if (UnlockOperatorNum != null) UnlockOperatorNum.GetComponent<TextMeshProUGUI>().text = "干员解锁数量:\t"+UnlockOperatorsNum+"/9";
+            if (UnlockOperatorNum != null) UnlockOperatorNum.GetComponent<TextMeshProUGUI>().text = "干员解锁数量:\t\t"+UnlockOperatorsNum+"/9";
             UnlockOperatorsNum = 0;
             //等级读取
-            Level.GetComponent<TextMeshProUGUI>().text = "博士等级:\t\t" + SaveManager.PlayerSave.level + "/120";
+            Level.GetComponent<TextMeshProUGUI>().text = "博士等级:\t\t\t" + SaveManager.PlayerSave.level + "/120";
             SaveManager.Close();
             //Debug.Log("已关闭存档文件");
         }
