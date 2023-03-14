@@ -9,7 +9,9 @@ public class SaveFile
 {
     public string playerID; //玩家ID
     public string playerName; //玩家名称
-    public float level = 0; //技术等级
+    public string registerTimeStamp; //注册时间戳
+    public float level; //技术等级
+    public OpreatorID assistantID; //玩家当前助理
     public List<ChartScore> chartScores; //分数列表
     public List<Opreator> opreators; //已解锁/获得的干员列表
 }
@@ -119,7 +121,12 @@ public static class SaveManager
     {
         //新建存档
         SaveFile newSave = new SaveFile();
+        //初始化玩家名称
         newSave.playerName = playerName;
+        //初始化技术等级
+        newSave.level = 0;
+        //初始化助理
+        newSave.assistantID = OpreatorID.Amiya;
         //初始化曲目
         newSave.chartScores = new List<ChartScore>();
         foreach (ChartID id in Enum.GetValues(typeof(ChartID)))
@@ -133,8 +140,11 @@ public static class SaveManager
             new Opreator { id = OpreatorID.Logos },
             new Opreator { id = OpreatorID.Mountain }
         };
-        //根据时间生成唯一ID
+
         TimeSpan timeStamp = DateTime.Now.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        //初始化注册时间戳
+        newSave.registerTimeStamp = timeStamp.TotalSeconds.ToString();
+        //根据时间生成唯一ID
         newSave.playerID = $"{UnityEngine.Random.Range(100, 999)}{timeStamp.TotalSeconds.ToString().Substring(3, 6)}";
         //保存
         SaveToFile(newSave, FILENAME);

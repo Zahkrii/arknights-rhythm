@@ -123,6 +123,6 @@ public class SaveTest : MonoBehaviour
 
         //最后
         //存档使用了序列化成JSON字符串保存的形式，因为JSON本身的特性，有较多重复字符占用空间，于是又使用了Gzip对字符串进行压缩
-        //存档保存路径位于用户文件夹 AppData\LocalLow\Cookie Game Bakery\Arknights Rhythm 下
+        //存档保存路径位于用户文件夹 AppData\LocalLow\Cookie Game Bakery\明日旋律 下
     }
 }
