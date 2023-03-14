@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+*.asset filter=lfs diff=lfs merge=lfs -text
+=======
+>>>>>>> master
+*.unity binary
+*.prefab binary
+*.asset binary
